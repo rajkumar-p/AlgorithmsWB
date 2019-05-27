@@ -1,26 +1,17 @@
-#include "bstree_node.hpp"
 #include <iostream>
+#include "sorting_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
-    std::shared_ptr<BSTreeNode<unsigned int>>
-            node(new BSTreeNode<unsigned int>(15));
+    std::vector<int> numbers;
+    numbers = {2, 1, 5, 2, 3, 2};
 
-    std::cout <<"Node data : "<<node->data()<<std::endl;
-    std::cout <<"Node data(count) : "<<node->count()<<std::endl;
+    insertion_sort(numbers);
 
-    std::shared_ptr<BSTreeNode<unsigned int>>
-            left(new BSTreeNode<unsigned int>(10));
-    std::shared_ptr<BSTreeNode<unsigned int>>
-            right(new BSTreeNode<unsigned int>(20));
-
-    node->left = left;
-    node->right = right;
-
-    std::cout <<"Node left data : "<<node->left->data()<<std::endl;
-    std::cout <<"Node left data(count) : "<<node->left->count()<<std::endl;
-    std::cout <<"Node right data : "<<node->right->data()<<std::endl;
-    std::cout <<"Node right data(count) : "<<node->right->count()<<std::endl;
+    for (const int number : numbers) {
+        std::cout << number << "\t";
+    }
+    std::cout <<std::endl;
 
     return 0;
 }

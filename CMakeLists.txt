@@ -23,9 +23,9 @@ include_directories(include)
 include_directories(test/include)
 
 add_executable(aw src/main.cpp include/string_algorithms.hpp src/string_algorithms.cpp src/array_algorithms.cpp
-        include/array_algorithms.hpp include/bstree_node.hpp)
+        include/array_algorithms.hpp include/bstree_node.hpp src/sorting_algorithms.cpp include/sorting_algorithms.hpp)
 add_executable(aw_tests test/src/aw_tests.cpp src/string_algorithms.cpp test/src/string_algorithms_tests.cpp
-        src/array_algorithms.cpp include/array_algorithms.hpp test/src/array_algorithms_tests.cpp)
+        src/array_algorithms.cpp include/array_algorithms.hpp test/src/array_algorithms_tests.cpp src/sorting_algorithms.cpp include/sorting_algorithms.hpp test/src/sorting_algorithms_tests.cpp)
 
 # Package executables to specific directory
 set_target_properties(aw PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/bin/debug)
