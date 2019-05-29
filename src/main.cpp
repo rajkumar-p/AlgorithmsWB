@@ -3,15 +3,6 @@
 
 int main(int argc, char *argv[])
 {
-    std::vector<int> numbers;
-    numbers = {2, 1, 5, 2, 3, 2};
-
-    insertion_sort(numbers);
-
-    for (const int number : numbers) {
-        std::cout << number << "\t";
-    }
-    std::cout <<std::endl;
-
+    std::cout <<"Hello World!!!"<<std::endl;
     return 0;
 }
