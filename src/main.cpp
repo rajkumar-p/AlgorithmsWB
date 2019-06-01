@@ -1,5 +1,5 @@
 #include <iostream>
-#include "sorting_algorithms.hpp"
+#include "dp_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
