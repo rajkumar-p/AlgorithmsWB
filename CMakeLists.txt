@@ -12,8 +12,15 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type (default Debug)" FORCE)
 endif()
 
+if (NOT ENABLE_STATIC_CHECKER)
+    message(STATUS "Enabling static checker on the binary")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra -g -fsanitize=address -fno-omit-frame-pointer")
+else()
+    message(STATUS "Not enabling static checker on the binary")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra -g")
+endif()
+
 # Compiler options for specific configurations
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra -g")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra")
 
 add_library(Catch INTERFACE)
@@ -24,11 +31,11 @@ include_directories(test/include)
 
 add_executable(aw src/main.cpp include/string_algorithms.hpp src/string_algorithms.cpp src/array_algorithms.cpp
         include/array_algorithms.hpp include/bstree_node.hpp src/sorting_algorithms.cpp
-        include/sorting_algorithms.hpp src/dp_algorithms.cpp include/dp_algorithms.hpp)
+        include/sorting_algorithms.hpp src/dp_algorithms.cpp include/dp_algorithms.hpp include/bstree.hpp)
 add_executable(aw_tests test/src/aw_tests.cpp src/string_algorithms.cpp test/src/string_algorithms_tests.cpp
         src/array_algorithms.cpp include/array_algorithms.hpp test/src/array_algorithms_tests.cpp
         src/sorting_algorithms.cpp include/sorting_algorithms.hpp test/src/sorting_algorithms_tests.cpp
-        src/dp_algorithms.cpp include/dp_algorithms.hpp test/src/dp_algorithms_tests.cpp)
+        src/dp_algorithms.cpp include/dp_algorithms.hpp test/src/dp_algorithms_tests.cpp include/bstree.hpp)
 
 # Package executables to specific directory
 set_target_properties(aw PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/bin/debug)

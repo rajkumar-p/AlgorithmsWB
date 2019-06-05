@@ -10,8 +10,8 @@ private:
     unsigned int _count;
 
 public:
-    std::shared_ptr<BSTreeNode> left;
-    std::shared_ptr<BSTreeNode> right;
+    std::shared_ptr<BSTreeNode> _left;
+    std::shared_ptr<BSTreeNode> _right;
 
     BSTreeNode(T data);
 
@@ -28,7 +28,7 @@ public:
 template<typename T>
 BSTreeNode<T>::BSTreeNode(T data)
     : _data(data), _count(1),
-    left(nullptr), right(nullptr)
+    _left(nullptr), _right(nullptr)
 {
 
 }
