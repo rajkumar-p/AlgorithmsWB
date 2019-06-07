@@ -9,38 +9,44 @@ class BSTree {
 private:
     std::shared_ptr<BSTreeNode<T>> _root;
 
+    std::shared_ptr<BSTreeNode<T>> insert_iterative(
+            std::shared_ptr<BSTreeNode<T>> root, T element);
 public:
-    BSTree(std::shared_ptr<BSTreeNode<T>> root);
     BSTree(T root_element);
+    BSTree(std::shared_ptr<BSTreeNode<T>> root);
 
     std::shared_ptr<BSTreeNode<T>> root();
 
-    void add_node(
-            std::shared_ptr<BSTreeNode<T>> node);
-    std::shared_ptr<BSTreeNode<T>> add_element(T element);
-    std::shared_ptr<BSTreeNode<T>> add_element_iterative(
-            std::shared_ptr<BSTreeNode<T>> root, T element);
+    std::shared_ptr<BSTreeNode<T>> insert(T element);
+    std::shared_ptr<BSTreeNode<T>> insert(const std::vector<T> &elements);
+    std::shared_ptr<BSTreeNode<T>> insert_at(
+            std::shared_ptr<BSTreeNode<T>> root,
+            T element);
 
-    void inorder_traversal(
+    std::shared_ptr<BSTreeNode<T>> find(T element);
+    std::shared_ptr<BSTreeNode<T>> find_from(
             std::shared_ptr<BSTreeNode<T>> node,
-            std::function<void(std::shared_ptr<BSTreeNode<T>>)>&
-                    run_for_each_node);
+            T element);
+
+    void inorder(
+            std::shared_ptr<BSTreeNode<T>> node,
+            const std::function<void(std::shared_ptr<BSTreeNode<T>>)> &
+            run_for_each_node);
 };
+
+template<typename T>
+BSTree<T>::BSTree(T root_element)
+        : _root(std::make_shared<BSTreeNode<T>>(root_element))
+{
+    _root->_left = nullptr;
+    _root->_right = nullptr;
+}
 
 template<typename T>
 BSTree<T>::BSTree(std::shared_ptr<BSTreeNode<T>> root)
     : _root(root)
 {
-    _root->_left = nullptr;
-    _root->_righ = nullptr;
-}
 
-template<typename T>
-BSTree<T>::BSTree(T root_element)
-    : _root(std::make_shared<BSTreeNode<T>>(root_element))
-{
-    _root->_left = nullptr;
-    _root->_right = nullptr;
 }
 
 template<typename T>
@@ -50,14 +56,21 @@ std::shared_ptr<BSTreeNode<T>> BSTree<T>::root()
 }
 
 template<typename T>
-std::shared_ptr<BSTreeNode<T>> BSTree<T>::add_element(T element)
+std::shared_ptr<BSTreeNode<T>> BSTree<T>::insert(T element)
 {
-    return add_element_iterative(this->root(),
-                                 element);
+    return insert_iterative(this->root(),
+                            element);
 }
 
 template<typename T>
-std::shared_ptr<BSTreeNode<T>> BSTree<T>::add_element_iterative(
+std::shared_ptr<BSTreeNode<T>> BSTree<T>::insert_at(
+        std::shared_ptr<BSTreeNode<T>> root, T element)
+{
+    this->insert_iterative(root, element);
+}
+
+template<typename T>
+std::shared_ptr<BSTreeNode<T>> BSTree<T>::insert_iterative(
         std::shared_ptr<BSTreeNode<T>> root, T element)
 {
     std::shared_ptr<BSTreeNode<T>> parent = nullptr;
@@ -89,13 +102,46 @@ std::shared_ptr<BSTreeNode<T>> BSTree<T>::add_element_iterative(
 }
 
 template<typename T>
-void BSTree<T>::inorder_traversal(std::shared_ptr<BSTreeNode<T>> node,
-                                  std::function<void(std::shared_ptr<BSTreeNode<T>>)> &run_for_each_node)
+std::shared_ptr<BSTreeNode<T>> BSTree<T>::insert(
+        const std::vector<T> &elements)
+{
+    for (const T &element : elements) {
+        this->insert(element);
+    }
+
+    return this->root();
+}
+
+template<typename T>
+std::shared_ptr<BSTreeNode<T>> BSTree<T>::find(T element)
+{
+    return this->find_from(this->root(), element);
+}
+
+template<typename T>
+std::shared_ptr<BSTreeNode<T>> BSTree<T>::find_from(
+        std::shared_ptr<BSTreeNode<T>> node,
+        T element)
+{
+    if (node == nullptr) {
+        return nullptr;
+    } else if (node->data() == element) {
+        return node;
+    } else if (node->data() > element) {
+        return find_from(node->_left, element);
+    } else {
+        return find_from(node->_right, element);
+    }
+}
+
+template<typename T>
+void BSTree<T>::inorder(std::shared_ptr<BSTreeNode<T>> node,
+                        const std::function<void(std::shared_ptr<BSTreeNode<T>>)> &run_for_each_node)
 {
     if (node != nullptr) {
-        inorder_traversal(node->_left, run_for_each_node);
+        inorder(node->_left, run_for_each_node);
         run_for_each_node(node);
-        inorder_traversal(node->_right, run_for_each_node);
+        inorder(node->_right, run_for_each_node);
     }
 }
 
