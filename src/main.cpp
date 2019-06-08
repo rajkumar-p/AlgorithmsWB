@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "bstree.hpp"
+#include "bstree_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {

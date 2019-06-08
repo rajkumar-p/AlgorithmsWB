@@ -223,8 +223,8 @@ void BSTree<T>::preorder(std::shared_ptr<BSTreeNode<T>> start,
 {
     if (start != nullptr) {
         run_for_each_node(start);
-        inorder(start->_left, run_for_each_node);
-        inorder(start->_right, run_for_each_node);
+        preorder(start->_left, run_for_each_node);
+        preorder(start->_right, run_for_each_node);
     }
 }
 
@@ -233,8 +233,8 @@ void BSTree<T>::postorder(std::shared_ptr<BSTreeNode<T>> start,
                         const std::function<void(std::shared_ptr<BSTreeNode<T>>)> &run_for_each_node)
 {
     if (start != nullptr) {
-        inorder(start->_left, run_for_each_node);
-        inorder(start->_right, run_for_each_node);
+        postorder(start->_left, run_for_each_node);
+        postorder(start->_right, run_for_each_node);
         run_for_each_node(start);
     }
 }
