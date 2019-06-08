@@ -10,7 +10,14 @@ private:
     std::shared_ptr<BSTreeNode<T>> _root;
 
     std::shared_ptr<BSTreeNode<T>> insert_iterative(
-            std::shared_ptr<BSTreeNode<T>> root, T element);
+            T element,
+            std::shared_ptr<BSTreeNode<T>> root);
+
+    std::shared_ptr<BSTreeNode<T>> find_parent(
+            std::shared_ptr<BSTreeNode<T>> parent,
+            std::shared_ptr<BSTreeNode<T>> node,
+            std::shared_ptr<BSTreeNode<T>> start);
+
 public:
     BSTree(T root_element);
     BSTree(std::shared_ptr<BSTreeNode<T>> root);
@@ -19,17 +26,31 @@ public:
 
     std::shared_ptr<BSTreeNode<T>> insert(T element);
     std::shared_ptr<BSTreeNode<T>> insert(const std::vector<T> &elements);
-    std::shared_ptr<BSTreeNode<T>> insert_at(
-            std::shared_ptr<BSTreeNode<T>> root,
-            T element);
+    std::shared_ptr<BSTreeNode<T>> insert(T element,
+            std::shared_ptr<BSTreeNode<T>> start);
 
     std::shared_ptr<BSTreeNode<T>> find(T element);
-    std::shared_ptr<BSTreeNode<T>> find_from(
+    std::shared_ptr<BSTreeNode<T>> find(T element,
+            std::shared_ptr<BSTreeNode<T>> start);
+
+    std::shared_ptr<BSTreeNode<T>> find_parent_of(
+            std::shared_ptr<BSTreeNode<T>> node);
+    std::shared_ptr<BSTreeNode<T>> find_parent_of(
             std::shared_ptr<BSTreeNode<T>> node,
-            T element);
+            std::shared_ptr<BSTreeNode<T>> start);
+
+    void remove(T element);
 
     void inorder(
-            std::shared_ptr<BSTreeNode<T>> node,
+            std::shared_ptr<BSTreeNode<T>> start,
+            const std::function<void(std::shared_ptr<BSTreeNode<T>>)> &
+            run_for_each_node);
+    void preorder(
+            std::shared_ptr<BSTreeNode<T>> start,
+            const std::function<void(std::shared_ptr<BSTreeNode<T>>)> &
+            run_for_each_node);
+    void postorder(
+            std::shared_ptr<BSTreeNode<T>> start,
             const std::function<void(std::shared_ptr<BSTreeNode<T>>)> &
             run_for_each_node);
 };
@@ -58,20 +79,22 @@ std::shared_ptr<BSTreeNode<T>> BSTree<T>::root()
 template<typename T>
 std::shared_ptr<BSTreeNode<T>> BSTree<T>::insert(T element)
 {
-    return insert_iterative(this->root(),
-                            element);
+    return insert_iterative(element,
+            this->root());
 }
 
 template<typename T>
-std::shared_ptr<BSTreeNode<T>> BSTree<T>::insert_at(
-        std::shared_ptr<BSTreeNode<T>> root, T element)
+std::shared_ptr<BSTreeNode<T>> BSTree<T>::insert(
+        T element,
+        std::shared_ptr<BSTreeNode<T>> root)
 {
-    this->insert_iterative(root, element);
+    this->insert_iterative(element, root);
 }
 
 template<typename T>
 std::shared_ptr<BSTreeNode<T>> BSTree<T>::insert_iterative(
-        std::shared_ptr<BSTreeNode<T>> root, T element)
+        T element,
+        std::shared_ptr<BSTreeNode<T>> root)
 {
     std::shared_ptr<BSTreeNode<T>> parent = nullptr;
     std::shared_ptr<BSTreeNode<T>> node = root;
@@ -115,33 +138,104 @@ std::shared_ptr<BSTreeNode<T>> BSTree<T>::insert(
 template<typename T>
 std::shared_ptr<BSTreeNode<T>> BSTree<T>::find(T element)
 {
-    return this->find_from(this->root(), element);
+    return this->find(element, this->root());
 }
 
 template<typename T>
-std::shared_ptr<BSTreeNode<T>> BSTree<T>::find_from(
-        std::shared_ptr<BSTreeNode<T>> node,
-        T element)
+std::shared_ptr<BSTreeNode<T>> BSTree<T>::find(T element,
+        std::shared_ptr<BSTreeNode<T>> start)
 {
-    if (node == nullptr) {
+    if (start == nullptr) {
         return nullptr;
-    } else if (node->data() == element) {
-        return node;
-    } else if (node->data() > element) {
-        return find_from(node->_left, element);
+    } else if (start->data() == element) {
+        return start;
+    } else if (start->data() > element) {
+        return find(element, start->_left);
     } else {
-        return find_from(node->_right, element);
+        return find(element, start->_right);
     }
 }
 
 template<typename T>
-void BSTree<T>::inorder(std::shared_ptr<BSTreeNode<T>> node,
+std::shared_ptr<BSTreeNode<T>> BSTree<T>::find_parent_of(
+        std::shared_ptr<BSTreeNode<T>> node)
+{
+    return this->find_parent_of(node, this->root());
+}
+
+template<typename T>
+std::shared_ptr<BSTreeNode<T>> BSTree<T>::find_parent_of(
+        std::shared_ptr<BSTreeNode<T>> node,
+        std::shared_ptr<BSTreeNode<T>> start)
+{
+    return this->find_parent(nullptr, node, start);
+}
+
+template<typename T>
+std::shared_ptr<BSTreeNode<T>> BSTree<T>::find_parent(
+        std::shared_ptr<BSTreeNode<T>> parent,
+        std::shared_ptr<BSTreeNode<T>> node,
+        std::shared_ptr<BSTreeNode<T>> start)
+{
+    if (start == nullptr || node == nullptr) {
+        return nullptr;
+    }
+
+    if (start == node) {
+        return parent;
+    } else if (node->data() < start->data()) {
+        return find_parent(start, node, start->_left);
+    } else {
+        return find_parent(start, node, start->_right);
+    }
+}
+
+template<typename T>
+void BSTree<T>::remove(T element)
+{
+    std::shared_ptr<BSTreeNode<T>> node_to_delete =
+            this->find(element);
+
+    if (node_to_delete == nullptr) {
+        return;
+    }
+
+    if (node_to_delete->_left == nullptr &&
+        node_to_delete->_right == nullptr) {
+
+    }
+}
+
+template<typename T>
+void BSTree<T>::inorder(std::shared_ptr<BSTreeNode<T>> start,
                         const std::function<void(std::shared_ptr<BSTreeNode<T>>)> &run_for_each_node)
 {
-    if (node != nullptr) {
-        inorder(node->_left, run_for_each_node);
-        run_for_each_node(node);
-        inorder(node->_right, run_for_each_node);
+    if (start != nullptr) {
+        inorder(start->_left, run_for_each_node);
+        run_for_each_node(start);
+        inorder(start->_right, run_for_each_node);
+    }
+}
+
+template<typename T>
+void BSTree<T>::preorder(std::shared_ptr<BSTreeNode<T>> start,
+                        const std::function<void(std::shared_ptr<BSTreeNode<T>>)> &run_for_each_node)
+{
+    if (start != nullptr) {
+        run_for_each_node(start);
+        inorder(start->_left, run_for_each_node);
+        inorder(start->_right, run_for_each_node);
+    }
+}
+
+template<typename T>
+void BSTree<T>::postorder(std::shared_ptr<BSTreeNode<T>> start,
+                        const std::function<void(std::shared_ptr<BSTreeNode<T>>)> &run_for_each_node)
+{
+    if (start != nullptr) {
+        inorder(start->_left, run_for_each_node);
+        inorder(start->_right, run_for_each_node);
+        run_for_each_node(start);
     }
 }
 
