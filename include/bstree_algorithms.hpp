@@ -10,6 +10,14 @@ std::shared_ptr<BSTreeNode<int>> bst_to_gst(
 
 // https://leetcode.com/problems/binary-tree-level-order-traversal/
 std::vector<std::vector<int>> level_order(
-        std::shared_ptr<BSTreeNode<int>> bstree);
+        std::shared_ptr<BSTree<int>> bstree);
+
+// https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
+std::vector<std::vector<int>> level_order_reverse(
+        std::shared_ptr<BSTree<int>> bstree);
+
+// https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+std::vector<std::vector<int>> zigzag_level_order(
+        std::shared_ptr<BSTree<int>> bstree);
 
 #endif //ALGORITHMSWORKBENCH_BSTREE_ALGORITHMS_HPP
