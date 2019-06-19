@@ -36,3 +36,80 @@ TEST_CASE("bst_to_gst() tests", "[bst_to_gst() tests]")
 
     REQUIRE(result == check);
 }
+
+TEST_CASE("level_order() tests", "[bst_to_gst() tests]")
+{
+    std::shared_ptr<BSTree<int>> bstree(
+            std::make_shared<BSTree<int>>(4));
+    bstree->insert({1, 6, 0, 2, 5, 7, 3, 8});
+
+    std::vector<std::vector<int>> check;
+    std::vector<std::vector<int>> result;
+
+    check = {{4}, {1, 6}, {0, 2, 5, 7}, {3, 8}};
+    result = level_order(bstree);
+
+    REQUIRE(result == check);
+
+    bstree.reset();
+
+    bstree = std::make_shared<BSTree<int>>(15);
+    bstree->insert({5, 16, 3, 12, 20, 10, 13, 18, 23, 6, 21, 7, 22});
+
+    check = {{15}, {5, 16}, {3, 12, 20}, {10, 13, 18, 23}, {6, 21}, {7, 22}};
+    result = level_order(bstree);
+
+    REQUIRE(result == check);
+}
+
+TEST_CASE("level_order_reverse() tests", "[bst_to_gst_reverse() tests]")
+{
+    std::shared_ptr<BSTree<int>> bstree(
+            std::make_shared<BSTree<int>>(4));
+    bstree->insert({1, 6, 0, 2, 5, 7, 3, 8});
+
+    std::vector<std::vector<int>> check;
+    std::vector<std::vector<int>> result;
+
+    check = {{4}, {1, 6}, {0, 2, 5, 7}, {3, 8}};
+    std::reverse(check.begin(), check.end());
+    result = level_order_reverse(bstree);
+
+    REQUIRE(result == check);
+
+    bstree.reset();
+
+    bstree = std::make_shared<BSTree<int>>(15);
+    bstree->insert({5, 16, 3, 12, 20, 10, 13, 18, 23, 6, 21, 7, 22});
+
+    check = {{15}, {5, 16}, {3, 12, 20}, {10, 13, 18, 23}, {6, 21}, {7, 22}};
+    std::reverse(check.begin(), check.end());
+    result = level_order_reverse(bstree);
+
+    REQUIRE(result == check);
+}
+
+TEST_CASE("zig_zag_level_order() tests", "[zig_zag_level_order() tests]")
+{
+    std::shared_ptr<BSTree<int>> bstree(
+            std::make_shared<BSTree<int>>(4));
+    bstree->insert({1, 6, 0, 2, 5, 7, 3, 8});
+
+    std::vector<std::vector<int>> check;
+    std::vector<std::vector<int>> result;
+
+    check = {{4}, {6, 1}, {0, 2, 5, 7}, {8, 3}};
+    result = zigzag_level_order(bstree);
+
+    REQUIRE(result == check);
+
+    bstree.reset();
+
+    bstree = std::make_shared<BSTree<int>>(15);
+    bstree->insert({5, 16, 3, 12, 20, 10, 13, 18, 23, 6, 21, 7, 22});
+
+    check = {{15}, {16, 5}, {3, 12, 20}, {23, 18, 13, 10}, {6, 21}, {22, 7}};
+    result = zigzag_level_order(bstree);
+
+    REQUIRE(result == check);
+}
