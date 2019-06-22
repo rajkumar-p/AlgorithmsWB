@@ -23,3 +23,31 @@ TEST_CASE("smallest_subarray_with_sum_greater_than_x() tests", "smallest_subarra
         REQUIRE(smallest_subarray_with_sum_greater_than_x(numbers, x) == 4);
     }
 }
+
+TEST_CASE("longest_substr_with_k_unique_chars() tests", "longest_substr_with_k_unique_chars() tests]")
+{
+    SECTION("longest_substr_with_k_unique_chars() tests") {
+        std::string str;
+        unsigned int k;
+
+        str = "araaci";
+        k = 2;
+        REQUIRE(longest_substr_with_k_unqiue_chars(str, k) == 4);
+
+        str = "aabbcc";
+        k = 1;
+        REQUIRE(longest_substr_with_k_unqiue_chars(str, k) == 2);
+
+        str = "aabbcc";
+        k = 2;
+        REQUIRE(longest_substr_with_k_unqiue_chars(str, k) == 4);
+
+        str = "aabbcc";
+        k = 3;
+        REQUIRE(longest_substr_with_k_unqiue_chars(str, k) == 6);
+
+        str = "aaabbb";
+        k = 3;
+        REQUIRE(longest_substr_with_k_unqiue_chars(str, k) == 6);
+    }
+}
