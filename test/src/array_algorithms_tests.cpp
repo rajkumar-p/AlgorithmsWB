@@ -20,3 +20,17 @@ TEST_CASE("max_avg_subarray_of_size_k() tests", "[max_avg_subarray_of_size_k() t
     result = {0.5, 12.75, 10.5};
     REQUIRE(max_avg_subarray_of_size_k(numbers, k) == result);
 }
+
+TEST_CASE("max_sum_subarray_of_size_k() tests", "[max_sum_subarray_of_size_k() tests]")
+{
+    std::vector<int> numbers;
+    size_t k;
+
+    numbers = {2, 1, 5, 1, 3, 2};
+    k = 3;
+    REQUIRE(max_sum_subarray_of_size_k(numbers, k) == 9);
+
+    numbers = {2, 3, 4, 1, 5};
+    k = 2;
+    REQUIRE(max_sum_subarray_of_size_k(numbers, k) == 7);
+}

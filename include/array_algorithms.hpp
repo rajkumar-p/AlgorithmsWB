@@ -7,4 +7,7 @@
 // Similar problem, but return all the averages in a std::vector<int>
 std::vector<double> max_avg_subarray_of_size_k(const std::vector<int> &numbers, size_t k);
 
+//https://www.geeksforgeeks.org/find-maximum-minimum-sum-subarray-size-k/
+int max_sum_subarray_of_size_k(const std::vector<int> &numbers, size_t k);
+
 #endif //ALGORITHMSWORKBENCH_ARRAY_ALGORITHMS_HPP

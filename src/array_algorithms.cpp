@@ -30,3 +30,24 @@ std::vector<double> max_avg_subarray_of_size_k(const std::vector<int> &numbers, 
 
     return result;
 }
+
+int max_sum_subarray_of_size_k(const std::vector<int> &numbers, size_t k)
+{
+    if (numbers.size() < k) {
+        return std::accumulate(numbers.begin(), numbers.end(), 0);
+    }
+
+    int max_sum = 0;
+    int current_sum = 0;
+    for (size_t i = 0; i < k; ++i) {
+        current_sum += numbers[i];
+    }
+    max_sum = current_sum;
+
+    for (size_t i = k, begin = 0; i < numbers.size(); ++i, ++begin) {
+        current_sum = current_sum + numbers[i] - numbers[begin];
+        max_sum = std::max(max_sum, current_sum);
+    }
+
+    return max_sum;
+}
