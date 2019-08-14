@@ -21,6 +21,11 @@ TEST_CASE("smallest_subarray_with_sum_greater_than_x() tests", "smallest_subarra
         x = 280;
 
         REQUIRE(smallest_subarray_with_sum_greater_than_x(numbers, x) == 4);
+
+        numbers = {5, 2, 7, 52, 30, 12, 18};
+        x = 100;
+
+        REQUIRE(smallest_subarray_with_sum_greater_than_x(numbers, x) == 4);
     }
 }
 

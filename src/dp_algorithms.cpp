@@ -5,21 +5,21 @@ unsigned int smallest_subarray_with_sum_greater_than_x(
         const std::vector<unsigned int> &numbers,
         unsigned int x)
 {
-    unsigned int window_sum = 0;
-    unsigned int smallest_subarr_size = numbers.size();
-    for (unsigned int head = 0, tail = 0; tail < numbers.size(); ++tail) {
-        window_sum += numbers[tail];
-        while (window_sum - numbers[head] > x) {
-            window_sum -= numbers[head];
-            ++head;
+    unsigned int subarray_size = numbers.size();
+    unsigned int sum = 0;
+    unsigned int begin = 0, end = 0;
 
-            unsigned int current_subarr_size = tail - head + 1;
-            smallest_subarr_size =
-                    std::min(smallest_subarr_size, current_subarr_size);
+    while (end < numbers.size()) {
+        sum += numbers[end];
+        while (sum - numbers[begin] > x) {
+            sum -= numbers[begin];
+            ++begin;
+            subarray_size = std::min(subarray_size, end - begin + 1);
         }
+        ++end;
     }
 
-    return smallest_subarr_size;
+    return subarray_size;
 }
 
 unsigned int longest_substr_with_k_unqiue_chars(
