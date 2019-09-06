@@ -120,3 +120,64 @@ TEST_CASE("binary_search_leftmost() tests", "[binary_search_leftmost() tests]")
     pos = binary_search_leftmost(i_elements, 0);
     REQUIRE(pos == -1);
 }
+
+TEST_CASE("binary_search_rightmost() tests", "[binary_search_rightmost() tests]")
+{
+    std::vector<int> i_elements;
+
+    int pos;
+
+    i_elements = { 1, 2, 3, 4, 4, 5, 6, 7 };
+
+    pos = binary_search_rightmost(i_elements, 4);
+    REQUIRE(pos == 4);
+
+    pos = binary_search_rightmost(i_elements, 5);
+    REQUIRE(pos == 5);
+
+    pos = binary_search_rightmost(i_elements, 6);
+    REQUIRE(pos == 6);
+
+    pos = binary_search_rightmost(i_elements, 7);
+    REQUIRE(pos == 7);
+
+    pos = binary_search_rightmost(i_elements, 9);
+    REQUIRE(pos == -1);
+
+    i_elements = { 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5 };
+
+    pos = binary_search_rightmost(i_elements, 1);
+    REQUIRE(pos == 3);
+
+    pos = binary_search_rightmost(i_elements, 2);
+    REQUIRE(pos == 7);
+
+    pos = binary_search_rightmost(i_elements, 3);
+    REQUIRE(pos == 11);
+
+    pos = binary_search_rightmost(i_elements, 4);
+    REQUIRE(pos == 15);
+
+    pos = binary_search_rightmost(i_elements, 5);
+    REQUIRE(pos == 18);
+
+    pos = binary_search_rightmost(i_elements, 6);
+    REQUIRE(pos == -1);
+
+    i_elements = { 1, 3, 4, 6, 7, 8, 10, 13, 14, 18, 19, 21, 24, 37, 40, 45, 71 };
+
+    pos = binary_search_rightmost(i_elements, 7);
+    REQUIRE(pos == 4);
+
+    pos = binary_search_rightmost(i_elements, 8);
+    REQUIRE(pos == 5);
+
+    pos = binary_search_rightmost(i_elements, 24);
+    REQUIRE(pos == 12);
+
+    pos = binary_search_rightmost(i_elements, 90);
+    REQUIRE(pos == -1);
+
+    pos = binary_search_rightmost(i_elements, 0);
+    REQUIRE(pos == -1);
+}
