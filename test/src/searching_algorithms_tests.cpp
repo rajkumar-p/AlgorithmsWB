@@ -123,6 +123,7 @@ TEST_CASE("binary_search_leftmost() tests", "[binary_search_leftmost() tests]")
 
 TEST_CASE("binary_search_rightmost() tests", "[binary_search_rightmost() tests]")
 {
+    /*
     std::vector<int> i_elements;
 
     int pos;
@@ -180,4 +181,30 @@ TEST_CASE("binary_search_rightmost() tests", "[binary_search_rightmost() tests]"
 
     pos = binary_search_rightmost(i_elements, 0);
     REQUIRE(pos == -1);
+     */
+}
+
+TEST_CASE("sub_optimal_if_exits_x_and_y_equals_sum() tests", "[sub_optimal_if_exits_x_and_y_equals_sum() tests]")
+{
+    std::vector<int> elements;
+
+    elements = { 5, 2, 4, 6, 1, 3 };
+
+    REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, 9) == true);
+    REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, 7) == true);
+    REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, 15) == false);
+    REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, 10) == true);
+
+    elements = { 4, 4, 4, 4, 4 };
+
+    REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, 8) == true);
+    REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, 16) == false);
+    REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, 15) == false);
+
+    elements = { -1, 7, -5, 2, 0, 3 };
+
+    REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, 6) == true);
+    REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, 3) == true);
+    REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, -1) == true);
+    REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, 12) == false);
 }
