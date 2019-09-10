@@ -208,3 +208,28 @@ TEST_CASE("sub_optimal_if_exits_x_and_y_equals_sum() tests", "[sub_optimal_if_ex
     REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, -1) == true);
     REQUIRE(sub_optimal_if_exits_x_and_y_equals_sum(elements, 12) == false);
 }
+
+TEST_CASE("if_exits_x_and_y_equals_sum() tests", "[if_exits_x_and_y_equals_sum() tests]")
+{
+    std::vector<int> elements;
+
+    elements = { 5, 2, 4, 6, 1, 3 };
+
+    REQUIRE(if_exits_x_and_y_equals_sum(elements, 9) == true);
+    REQUIRE(if_exits_x_and_y_equals_sum(elements, 7) == true);
+    REQUIRE(if_exits_x_and_y_equals_sum(elements, 15) == false);
+    REQUIRE(if_exits_x_and_y_equals_sum(elements, 10) == true);
+
+    elements = { 4, 4, 4, 4, 4 };
+
+    REQUIRE(if_exits_x_and_y_equals_sum(elements, 8) == true);
+    REQUIRE(if_exits_x_and_y_equals_sum(elements, 16) == false);
+    REQUIRE(if_exits_x_and_y_equals_sum(elements, 15) == false);
+
+    elements = { -1, 7, -5, 2, 0, 3 };
+
+    REQUIRE(if_exits_x_and_y_equals_sum(elements, 6) == true);
+    REQUIRE(if_exits_x_and_y_equals_sum(elements, 3) == true);
+    REQUIRE(if_exits_x_and_y_equals_sum(elements, -1) == true);
+    REQUIRE(if_exits_x_and_y_equals_sum(elements, 12) == false);
+}

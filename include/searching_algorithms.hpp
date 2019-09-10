@@ -75,4 +75,6 @@ int binary_search_rightmost(const std::vector<T> &elements, T key)
 bool sub_optimal_if_exits_x_and_y_equals_sum(std::vector<int> &elements,
         const int sum);
 
+bool if_exits_x_and_y_equals_sum(const std::vector<int> &elements,
+                                             const int sum);
 #endif //ALGORITHMSWORKBENCH_SEARCHING_ALGORITHMS_HPP
