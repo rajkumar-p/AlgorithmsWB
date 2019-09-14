@@ -20,6 +20,12 @@ template<typename T,
 void selection_sort(std::vector<T> &elements,
         F cmp_fn = std::less<T>());
 
+// Bubble Sort
+template <typename T,
+        typename F = std::function<bool(T, T)>>
+void bubble_sort(std::vector<T> &elements,
+        F cmp_fn = std::less<T>());
+
 // Merge Sort
 template<typename T,
         typename F = std::function<bool(T, T)>>
@@ -65,6 +71,18 @@ void selection_sort(std::vector<T> &elements, F cmp_fn)
             }
         }
         std::swap(elements[i], elements[min_index]);
+    }
+}
+
+template <typename T, typename F>
+void bubble_sort(std::vector<T> &elements, F cmp_fn)
+{
+    for (size_t i = 0; i < elements.size(); ++i) {
+        for (size_t j = i + 1; j < elements.size(); ++j) {
+            if (cmp_fn(elements[j], elements[i])) {
+                std::swap(elements[i], elements[j]);
+            }
+        }
     }
 }
 
