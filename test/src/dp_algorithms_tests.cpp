@@ -56,3 +56,26 @@ TEST_CASE("longest_substr_with_k_unique_chars() tests", "longest_substr_with_k_u
         REQUIRE(longest_substr_with_k_unqiue_chars(str, k) == 6);
     }
 }
+
+TEST_CASE("longest_substr_with_unique_chars() tests", "longest_substr_with_unique_chars() tests]")
+{
+    std::string str;
+
+    str = "GEEKSFORGEEKS";
+    REQUIRE(longest_substr_with_unique_chars(str) == 7);
+
+    str = "BBBB";
+    REQUIRE(longest_substr_with_unique_chars(str) == 1);
+
+    str = "ABDEFGABEF";
+    REQUIRE(longest_substr_with_unique_chars(str) == 6);
+
+    str = "aabccbb";
+    REQUIRE(longest_substr_with_unique_chars(str) == 3);
+
+    str = "abbbb";
+    REQUIRE(longest_substr_with_unique_chars(str) == 2);
+
+    str = "abccde";
+    REQUIRE(longest_substr_with_unique_chars(str) == 3);
+}

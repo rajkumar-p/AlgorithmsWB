@@ -50,3 +50,21 @@ unsigned int longest_substr_with_k_unqiue_chars(
 
     return longest_substr;
 }
+
+unsigned int longest_substr_with_unique_chars(
+        const std::string &str)
+{
+    std::unordered_map<char, unsigned int> char_last_pos;
+    unsigned int longest_substr = 0;
+    for (unsigned int head = 0, tail = 0; tail < str.length(); ++tail) {
+        while (char_last_pos.find(str[tail]) != char_last_pos.end()) {
+            char_last_pos.erase(str[head]);
+            ++head;
+        }
+
+        char_last_pos[str[tail]] = tail;
+        longest_substr = std::max(longest_substr, tail - head + 1);
+    }
+
+    return longest_substr;
+}
