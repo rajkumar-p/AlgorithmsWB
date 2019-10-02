@@ -57,9 +57,8 @@ unsigned int longest_substr_with_unique_chars(
     std::unordered_map<char, unsigned int> char_last_pos;
     unsigned int longest_substr = 0;
     for (unsigned int head = 0, tail = 0; tail < str.length(); ++tail) {
-        while (char_last_pos.find(str[tail]) != char_last_pos.end()) {
-            char_last_pos.erase(str[head]);
-            ++head;
+        if (char_last_pos.find(str[tail]) != char_last_pos.end()) {
+            head = std::max(head, char_last_pos[str[tail]] + 1);
         }
 
         char_last_pos[str[tail]] = tail;
