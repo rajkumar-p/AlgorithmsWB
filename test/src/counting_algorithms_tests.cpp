@@ -20,3 +20,23 @@ TEST_CASE("count_inversions() tests", "[count_inversions() tests]")
     elements = { 1, 5, 6, 4, 20 };
     REQUIRE(count_inversions(elements) == 2);
 }
+
+TEST_CASE("better_count_inversions() tests", "[better_count_inversions() tests]")
+{
+    std::vector<int> elements;
+
+    elements = { 3, 41, 52, 26, 38, 57, 9, 49 };
+    REQUIRE(better_count_inversions(elements) == 11);
+
+    elements = { 2, 4, 1, 3, 5 };
+    REQUIRE(better_count_inversions(elements) == 3);
+
+    elements = { 8, 4, 2, 1 };
+    REQUIRE(better_count_inversions(elements) == 6);
+
+    elements = { 2, 3, 8, 6, 1 };
+    REQUIRE(better_count_inversions(elements) == 5);
+
+    elements = { 1, 5, 6, 4, 20 };
+    REQUIRE(better_count_inversions(elements) == 2);
+}
