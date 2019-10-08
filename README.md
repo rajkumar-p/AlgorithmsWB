@@ -21,4 +21,4 @@ Tests are implemented with the help of the [Catch](https://github.com/philsquare
 Free as in free speech.
 
 ## Contributions & Questions
-Send me a mail on <raj@diskodev.com> or tweet me at <https://twitter.com/#!/rajkumar_p>
+Send me a mail on <raj@diskodev.com> or tweet me at <https://twitter.com/rajkumar_p>
