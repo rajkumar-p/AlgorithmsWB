@@ -24,4 +24,7 @@ unsigned int count_letters_digits_from(const std::string &str);
 // https://www.codewars.com/kata/56a946cd7bd95ccab2000055
 unsigned int count_lowercase_letters_from(const std::string &str);
 
+// https://www.codewars.com/kata/59e19a747905df23cb000024
+std::string string_letter_count(const std::string &str);
+
 #endif //ALGORITHMSWORKBENCH_STRING_ALGORITHMS_HPP

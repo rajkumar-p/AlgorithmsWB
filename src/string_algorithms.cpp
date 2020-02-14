@@ -123,3 +123,29 @@ unsigned int count_lowercase_letters_from(const std::string &str)
 
     return count;
 }
+
+std::string string_letter_count(const std::string &str)
+{
+    std::string result;
+
+    std::map<char, int> count_map;
+    for (const char c : str) {
+        if (!isalpha(c)) {
+            continue;
+        }
+
+        char curr = tolower(c);
+
+        if (count_map.find(curr) == count_map.end()) {
+            count_map[curr] = 1;
+        } else {
+            count_map[curr] = count_map[curr] + 1;
+        }
+    }
+
+    for (const std::pair<char, int> &p : count_map) {
+        result = result + std::to_string(p.second) + p.first;
+    }
+
+    return result;
+}

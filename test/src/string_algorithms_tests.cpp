@@ -204,3 +204,22 @@ TEST_CASE("count_lowercase_letters_from() tests", "[count_lowercase_letters_from
         REQUIRE(count_lowercase_letters_from(str) == 26);
     }
 }
+
+TEST_CASE("string_letter_count() tests", "[string_letter_count() tests]")
+{
+    SECTION("string_letter_count() tests") {
+        std::string str;
+
+        str = "This is a test sentence.";
+        REQUIRE(string_letter_count(str) == "1a1c4e1h2i2n4s4t");
+
+        str = "";
+        REQUIRE(string_letter_count(str) == "");
+
+        str = "555";
+        REQUIRE(string_letter_count(str) == "");
+
+        str = "aaaaaaaaaa";
+        REQUIRE(string_letter_count(str) == "10a");
+    }
+}
