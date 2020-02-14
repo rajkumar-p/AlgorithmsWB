@@ -155,3 +155,52 @@ TEST_CASE("new_member_username() tests", "[new_member_username() tests]")
     }
 }
 
+TEST_CASE("count_letters_digits_from() tests", "[count_letters_digits_from() tests]")
+{
+    SECTION("count_letters_digits_from() tests") {
+        std::string str;
+
+        str = "hel2!lo";
+        REQUIRE(count_letters_digits_from(str) == 6);
+
+        str = "wicked .. !";
+        REQUIRE(count_letters_digits_from(str) == 6);
+
+        str = "!?..A";
+        REQUIRE(count_letters_digits_from(str) == 1);
+
+        str = "!?...";
+        REQUIRE(count_letters_digits_from(str) == 0);
+
+        str = "hello";
+        REQUIRE(count_letters_digits_from(str) == 5);
+
+        str = "";
+        REQUIRE(count_letters_digits_from(str) == 0);
+    }
+}
+
+TEST_CASE("count_lowercase_letters_from() tests", "[count_lowercase_letters_from() tests]")
+{
+    SECTION("count_lowercase_letters_from() tests") {
+        std::string str;
+
+        str = "abc";
+        REQUIRE(count_lowercase_letters_from(str) == 3);
+
+        str = "abcABC123";
+        REQUIRE(count_lowercase_letters_from(str) == 3);
+
+        str = "abcABC123!@€£#$%^&*()_-+=}{[]|\\':;?/>.<,~";
+        REQUIRE(count_lowercase_letters_from(str) == 3);
+
+        str = "";
+        REQUIRE(count_lowercase_letters_from(str) == 0);
+
+        str = "ABC123!@€£#$%^&*()_-+=}{[]|\\':;?/>.<,~";
+        REQUIRE(count_lowercase_letters_from(str) == 0);
+
+        str = "abcdefghijklmnopqrstuvwxyz";
+        REQUIRE(count_lowercase_letters_from(str) == 26);
+    }
+}

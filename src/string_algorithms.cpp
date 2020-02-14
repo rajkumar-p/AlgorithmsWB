@@ -99,3 +99,27 @@ std::string new_member_username(const std::vector<std::string> &existing_names,
         query = new_name + std::to_string(++index);
     }
 }
+
+unsigned int count_letters_digits_from(const std::string &str)
+{
+    unsigned int count = 0;
+    for (char c : str) {
+        if (isalnum(c)) {
+            ++count;
+        }
+    }
+
+    return count;
+}
+
+unsigned int count_lowercase_letters_from(const std::string &str)
+{
+    unsigned int count = 0;
+    for (const char c : str) {
+        if (islower(c)) {
+            ++count;
+        }
+    }
+
+    return count;
+}
