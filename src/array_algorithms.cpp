@@ -51,3 +51,28 @@ int max_sum_subarray_of_size_k(const std::vector<int> &numbers, size_t k)
 
     return max_sum;
 }
+
+void rotate_elements(std::vector<int> &numbers, unsigned int k)
+{
+    for (unsigned int start = 0, end = numbers.size() - 1; start < end; ++start, --end) {
+        std::swap(numbers[start], numbers[end]);
+    }
+
+    for (unsigned int start = 0, end = k - 1; start < end; ++start, --end) {
+        std::swap(numbers[start], numbers[end]);
+    }
+
+    for (unsigned int start = k, end = numbers.size() - 1; start < end; ++start, --end) {
+        std::swap(numbers[start], numbers[end]);
+    }
+}
+
+void replace_array_with_right_side_sum(std::vector<int> &numbers)
+{
+    int right_sum = 0;
+    for (int i = numbers.size() - 1; i >= 0; --i) {
+        int add = numbers[i];
+        numbers[i] = right_sum;
+        right_sum += add;
+    }
+}

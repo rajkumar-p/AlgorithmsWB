@@ -10,4 +10,9 @@ std::vector<double> max_avg_subarray_of_size_k(const std::vector<int> &numbers, 
 //https://www.geeksforgeeks.org/find-maximum-minimum-sum-subarray-size-k/
 int max_sum_subarray_of_size_k(const std::vector<int> &numbers, size_t k);
 
+// https://dev.to/alisabaj/not-an-easy-algorithm-rotating-an-array-three-ways-2f6h
+void rotate_elements(std::vector<int> &numbers, unsigned int k);
+
+void replace_array_with_right_side_sum(std::vector<int> &numbers);
+
 #endif //ALGORITHMSWORKBENCH_ARRAY_ALGORITHMS_HPP
