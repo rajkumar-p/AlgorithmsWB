@@ -1,8 +1,7 @@
 #include "catch.hpp"
 #include "dp_algorithms.hpp"
 
-TEST_CASE("smallest_subarray_with_sum_greater_than_x() tests", "smallest_subarray_with_sum_greater_than_x() tests]")
-{
+TEST_CASE("smallest_subarray_with_sum_greater_than_x() tests", "[dp]") {
     SECTION("smallest_subarray_with_sum_greater_than_x() tests") {
         std::vector<unsigned int> numbers;
         unsigned int x;
@@ -29,8 +28,7 @@ TEST_CASE("smallest_subarray_with_sum_greater_than_x() tests", "smallest_subarra
     }
 }
 
-TEST_CASE("longest_substr_with_k_unique_chars() tests", "longest_substr_with_k_unique_chars() tests]")
-{
+TEST_CASE("longest_substr_with_k_unique_chars() tests", "longest_substr_with_k_unique_chars() tests]") {
     SECTION("longest_substr_with_k_unique_chars() tests") {
         std::string str;
         unsigned int k;
@@ -57,8 +55,7 @@ TEST_CASE("longest_substr_with_k_unique_chars() tests", "longest_substr_with_k_u
     }
 }
 
-TEST_CASE("longest_substr_with_unique_chars() tests", "longest_substr_with_unique_chars() tests]")
-{
+TEST_CASE("longest_substr_with_unique_chars() tests", "longest_substr_with_unique_chars() tests]") {
     std::string str;
 
     str = "GEEKSFORGEEKS";

@@ -1,30 +1,31 @@
 #include "dp_algorithms.hpp"
+
 #include <unordered_map>
 
 unsigned int smallest_subarray_with_sum_greater_than_x(
-        const std::vector<unsigned int> &numbers,
-        unsigned int x)
-{
+        const std::vector<unsigned int> &numbers, unsigned int x) {
     unsigned int subarray_size = numbers.size();
-    unsigned int sum = 0;
-    unsigned int begin = 0, end = 0;
-
-    while (end < numbers.size()) {
-        sum += numbers[end];
-        while (sum - numbers[begin] > x) {
-            sum -= numbers[begin];
-            ++begin;
-            subarray_size = std::min(subarray_size, end - begin + 1);
+    unsigned int window_sum = 0;
+    for (unsigned int start = 0, end = 0; end < numbers.size(); ++end) {
+        window_sum += numbers[end];
+        if (window_sum <= x) {
+            continue;
         }
-        ++end;
+
+        while (start < end && window_sum - numbers[start] > x) {
+            window_sum -= numbers[start];
+            ++start;
+        }
+
+        unsigned int curr_subarray_count = end - start + 1;
+        subarray_size = std::min(subarray_size, curr_subarray_count);
     }
 
     return subarray_size;
 }
 
-unsigned int longest_substr_with_k_unqiue_chars(
-        const std::string &str, unsigned int k)
-{
+unsigned int longest_substr_with_k_unqiue_chars(const std::string &str,
+                                                unsigned int k) {
     std::unordered_map<char, unsigned int> char_map;
     unsigned int longest_substr = 0;
     for (unsigned int head = 0, tail = 0; tail < str.length(); ++tail) {
@@ -51,9 +52,7 @@ unsigned int longest_substr_with_k_unqiue_chars(
     return longest_substr;
 }
 
-unsigned int longest_substr_with_unique_chars(
-        const std::string &str)
-{
+unsigned int longest_substr_with_unique_chars(const std::string &str) {
     std::unordered_map<char, unsigned int> char_last_pos;
     unsigned int longest_substr = 0;
     for (unsigned int head = 0, tail = 0; tail < str.length(); ++tail) {
