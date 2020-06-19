@@ -52,17 +52,20 @@ unsigned int longest_substr_with_k_unqiue_chars(const std::string &str,
     return longest_substr;
 }
 
-unsigned int longest_substr_with_unique_chars(const std::string &str) {
-    std::unordered_map<char, unsigned int> char_last_pos;
-    unsigned int longest_substr = 0;
-    for (unsigned int head = 0, tail = 0; tail < str.length(); ++tail) {
-        if (char_last_pos.find(str[tail]) != char_last_pos.end()) {
-            head = std::max(head, char_last_pos[str[tail]] + 1);
+unsigned int longest_substr_with_unique_chars(std::string &str) {
+    std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+    int char_arr[26] = {0};
+    unsigned int longest_substr_len = 0;
+    for (unsigned int start = 0, end = 0; end < str.length(); ++end) {
+        char_arr[str[end] - 65] += 1;
+        while (start < end && char_arr[str[end] - 65] > 1) {
+            char_arr[str[start] - 65] -= 1;
+            ++start;
         }
 
-        char_last_pos[str[tail]] = tail;
-        longest_substr = std::max(longest_substr, tail - head + 1);
+        unsigned int window_len = end - start + 1;
+        longest_substr_len = std::max(longest_substr_len, window_len);
     }
 
-    return longest_substr;
+    return longest_substr_len;
 }

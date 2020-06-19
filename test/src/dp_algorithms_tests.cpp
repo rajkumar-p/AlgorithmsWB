@@ -55,7 +55,7 @@ TEST_CASE("longest_substr_with_k_unique_chars() tests", "longest_substr_with_k_u
     }
 }
 
-TEST_CASE("longest_substr_with_unique_chars() tests", "longest_substr_with_unique_chars() tests]") {
+TEST_CASE("longest_substr_with_unique_chars() tests", "[dp]") {
     std::string str;
 
     str = "GEEKSFORGEEKS";

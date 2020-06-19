@@ -13,6 +13,6 @@ unsigned int smallest_subarray_with_sum_greater_than_x(
 unsigned int longest_substr_with_k_unqiue_chars(const std::string &str, unsigned int k);
 
 // https://www.geeksforgeeks.org/length-of-the-longest-substring-without-repeating-characters/
-unsigned int longest_substr_with_unique_chars(const std::string &str);
+unsigned int longest_substr_with_unique_chars(std::string &str);
 
 #endif //ALGORITHMSWORKBENCH_DP_ALGORITHMS_HPP
