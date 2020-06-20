@@ -28,7 +28,7 @@ TEST_CASE("smallest_subarray_with_sum_greater_than_x() tests", "[dp]") {
     }
 }
 
-TEST_CASE("longest_substr_with_k_unique_chars() tests", "longest_substr_with_k_unique_chars() tests]") {
+TEST_CASE("longest_substr_with_k_unique_chars() tests", "[dp]") {
     SECTION("longest_substr_with_k_unique_chars() tests") {
         std::string str;
         unsigned int k;
@@ -75,4 +75,20 @@ TEST_CASE("longest_substr_with_unique_chars() tests", "[dp]") {
 
     str = "abccde";
     REQUIRE(longest_substr_with_unique_chars(str) == 3);
+}
+
+TEST_CASE("longest_subarray_with_1s_by_changing_atmost_k_0s() tests", "[dp]") {
+    std::string str;
+
+    str = "01100011011";
+    REQUIRE(longest_subarray_with_1s_by_changing_atmost_k_0s(str, 2) == 6);
+
+    str = "0100110110011";
+    REQUIRE(longest_subarray_with_1s_by_changing_atmost_k_0s(str, 3) == 9);
+
+    str = "1001101";
+    REQUIRE(longest_subarray_with_1s_by_changing_atmost_k_0s(str, 1) == 4);
+
+    str = "1001010101";
+    REQUIRE(longest_subarray_with_1s_by_changing_atmost_k_0s(str, 2) == 5);
 }

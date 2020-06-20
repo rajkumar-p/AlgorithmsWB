@@ -35,7 +35,7 @@ unsigned int longest_substr_with_k_unqiue_chars(const std::string &str,
             char_map[str[tail]] += 1;
         }
 
-        while (char_map.size() > k) {
+        while (head < tail && char_map.size() > k) {
             if (char_map[str[head]] == 1) {
                 char_map.erase(str[head]);
             } else {
@@ -68,4 +68,27 @@ unsigned int longest_substr_with_unique_chars(std::string &str) {
     }
 
     return longest_substr_len;
+}
+
+unsigned int longest_subarray_with_1s_by_changing_atmost_k_0s(const std::string &str,
+                                                              unsigned int k) {
+    unsigned int longest_subarray_len = 0;
+    unsigned int win_zero_count = 0;
+    for (unsigned int start = 0, end = 0; end < str.length(); ++end) {
+        if (str[end] == '0') {
+            ++win_zero_count;
+        }
+
+        while (start < end && win_zero_count > k) {
+            if (str[start] == '0') {
+                --win_zero_count;
+            }
+            ++start;
+        }
+
+        unsigned int ones_count = end - start + 1;
+        longest_subarray_len = std::max(longest_subarray_len, ones_count);
+    }
+
+    return longest_subarray_len;
 }
