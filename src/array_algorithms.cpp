@@ -1,5 +1,8 @@
 #include "array_algorithms.hpp"
+#include "searching_algorithms.hpp"
+
 #include <numeric>
+#include <unordered_map>
 
 std::vector<double> max_avg_subarray_of_size_k(const std::vector<int> &numbers, size_t k)
 {
@@ -76,4 +79,58 @@ void replace_array_with_right_side_sum(std::vector<int> &numbers)
         numbers[i] = right_sum;
         right_sum += add;
     }
+}
+
+unsigned int find_pair_with_given_sum_add_memory(const std::vector<int> &numbers, int sum ) {
+    unsigned int pairs = 0;
+    std::unordered_map<int, unsigned int> count_map;
+    for (unsigned int i = 0; i < numbers.size(); ++i) {
+        if (count_map.find(numbers[i]) == count_map.end()) {
+            count_map[numbers[i]] = 1;
+        } else {
+            count_map[numbers[i]] += 1;
+        }
+    }
+
+    for (unsigned int i = 0; i < numbers.size(); ++i) {
+        int to_find = sum - numbers[i];
+        if (to_find == numbers[i]) {
+            if (count_map[to_find] > 1) {
+                ++pairs;
+            }
+            continue;
+        }
+
+        if (count_map.find(to_find) != count_map.end()) {
+            ++pairs;
+        }
+    }
+
+    return pairs;
+}
+
+unsigned int find_pair_with_given_sum_without_add_memory(std::vector<int> &numbers, int sum) {
+    std::sort(numbers.begin(), numbers.end());
+
+    unsigned int pairs = 0;
+    for (unsigned int i = 0; i < numbers.size(); ++i) {
+        int to_find = sum - numbers[i];
+        if (to_find == numbers[i]) {
+            if ((i > 0 && numbers[i - 1] == to_find) ||
+                    (i + 1 < numbers.size() && numbers[i + 1] == to_find)) {
+                ++pairs;
+            }
+            continue;
+        }
+
+        if (binary_search(numbers, to_find) != -1) {
+            ++pairs;
+        }
+    }
+
+    return pairs;
+}
+
+unsigned int find_pair_with_given_sum(std::vector<int> &numbers, int sum) {
+    return find_pair_with_given_sum_without_add_memory(numbers, sum);
 }

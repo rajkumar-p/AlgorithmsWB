@@ -15,4 +15,7 @@ void rotate_elements(std::vector<int> &numbers, unsigned int k);
 
 void replace_array_with_right_side_sum(std::vector<int> &numbers);
 
+// http://www.techiedelight.com/find-pair-with-given-sum-array/
+unsigned int find_pair_with_given_sum(std::vector<int> &numbers, int sum);
+
 #endif //ALGORITHMSWORKBENCH_ARRAY_ALGORITHMS_HPP

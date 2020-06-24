@@ -86,5 +86,30 @@ TEST_CASE("replace_array_with_right_side_sum() tests", "[replace_array_with_righ
     replace_array_with_right_side_sum(numbers);
 
     REQUIRE(numbers == result);
+}
 
+TEST_CASE("find_pair_with_given_sum_add_memory() tests", "[array]")
+{
+    std::vector<int> numbers;
+    int sum;
+
+    numbers = {8, 7, 2, 5, 3, 1};
+    sum = 10;
+    REQUIRE(find_pair_with_given_sum(numbers, sum) == 4);
+
+    numbers = {8, 7, 2, 5, 3, 1};
+    sum = 15;
+    REQUIRE(find_pair_with_given_sum(numbers, sum) == 2);
+
+    numbers = {8, 7, 2, 5, 3, 1};
+    sum = 16;
+    REQUIRE(find_pair_with_given_sum(numbers, sum) == 0);
+
+    numbers = {8, 7, 2, 5, 3, 1, 8};
+    sum = 16;
+    REQUIRE(find_pair_with_given_sum(numbers, sum) == 2);
+
+    numbers = {8, 7, 2, 5, 3, 1, 8, 8};
+    sum = 16;
+    REQUIRE(find_pair_with_given_sum(numbers, sum) == 3);
 }
