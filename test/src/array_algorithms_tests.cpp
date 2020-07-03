@@ -113,3 +113,89 @@ TEST_CASE("find_pair_with_given_sum_add_memory() tests", "[array]")
     sum = 16;
     REQUIRE(find_pair_with_given_sum(numbers, sum) == 3);
 }
+
+TEST_CASE("get_subarrays_with_sum_0() tests", "[array]")
+{
+    std::vector<int> numbers;
+    std::vector<std::pair<unsigned int, unsigned int>> result;
+    std::vector<std::pair<unsigned int, unsigned int>> tmp;
+
+    numbers = {4, 2, -3, -1, 0, 4};
+    result = {{2, 5}, {4, 4}};
+
+    tmp = get_subarrays_with_sum_0(numbers);
+    std::sort(tmp.begin(), tmp.end());
+    REQUIRE(tmp == result);
+
+    numbers = {3, 4, -7, 3, 1, 3, 1, -4, -2, -2};
+    result = {{0, 2}, {0, 9}, {1, 3}, {2, 5}, {3, 9}, {5, 7}};
+
+    tmp = get_subarrays_with_sum_0(numbers);
+    std::sort(tmp.begin(), tmp.end());
+    REQUIRE(tmp == result);
+}
+
+TEST_CASE("find_the_one_duplicate() tests", "[array]")
+{
+    std::vector<int> numbers;
+
+    numbers = {1, 2, 3, 4, 4};
+    REQUIRE(find_the_one_duplicate(numbers) == 4);
+
+    numbers = {1, 2, 3, 4, 2};
+    REQUIRE(find_the_one_duplicate(numbers) == 2);
+
+    numbers = {5, 3, 1, 2, 4, 2, 6};
+    REQUIRE(find_the_one_duplicate(numbers) == 2);
+
+    numbers = {5, 3, 1, 2, 3, 4, 6};
+    REQUIRE(find_the_one_duplicate(numbers) == 3);
+}
+
+TEST_CASE("largest_subarray_with_consecutive_ints() tests", "[array]")
+{
+    std::vector<int> numbers;
+
+    numbers = {2, 0, 2, 1, 4, 3, 1, 0};
+    REQUIRE(largest_subarray_with_consecutive_ints(numbers) == 5);
+
+    numbers = {7, 3, 1, 2, 5, 6, 10};
+    REQUIRE(largest_subarray_with_consecutive_ints(numbers) == 3);
+
+    numbers = {5, 3, 15, 11, 10, 8, 12, 9, 15};
+    REQUIRE(largest_subarray_with_consecutive_ints(numbers) == 5);
+
+    numbers = {5, 5, 5, 5, 5, 5, 5, 5};
+    REQUIRE(largest_subarray_with_consecutive_ints(numbers) == 1);
+}
+
+TEST_CASE("max_len_subarray_having_sum_k() tests", "[array]")
+{
+   std::vector<int> numbers;
+
+   numbers = {5, 6, -5, 5, 3, 5, 3, -2, 0};
+   REQUIRE(max_len_subarray_having_sum_k(numbers, 8) == 4);
+
+   numbers = {10, 5, 2, 7, 1, 9};
+   REQUIRE(max_len_subarray_having_sum_k(numbers, 15) == 4);
+
+    numbers = {-5, 8, -14, 2, 4, 12};
+    REQUIRE(max_len_subarray_having_sum_k(numbers, -5) == 5);
+
+    numbers = {5, 5, 5, 5, 5, 5, 5};
+    REQUIRE(max_len_subarray_having_sum_k(numbers, 5) == 1);
+}
+
+TEST_CASE("max_len_subarray_having_equal_0s_and_1s() tests", "[array]")
+{
+    std::vector<unsigned int> numbers;
+
+    numbers = {0, 0, 1, 0, 1, 0, 0};
+    REQUIRE(max_len_subarray_having_equal_0s_and_1s(numbers) == 4);
+
+    numbers = {1, 0, 1, 1, 1, 0, 0};
+    REQUIRE(max_len_subarray_having_equal_0s_and_1s(numbers) == 6);
+
+    numbers = {0, 0, 1, 1, 0};
+    REQUIRE(max_len_subarray_having_equal_0s_and_1s(numbers) == 4);
+}

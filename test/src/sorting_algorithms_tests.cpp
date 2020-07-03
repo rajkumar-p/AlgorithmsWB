@@ -152,3 +152,28 @@ TEST_CASE("merge_sort() tests", "[merge_sort() tests]")
     REQUIRE(std::is_sorted(words.begin(), words.end(),
                            std::greater<std::string>()) == true);
 }
+
+TEST_CASE("sort_binary_array() tests", "[sort]")
+{
+    std::vector<bool> numbers;
+
+    numbers = {1, 0, 1, 0, 1, 0, 0, 1};
+    sort_binary_array(numbers);
+
+    REQUIRE(is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    sort_binary_array(numbers);
+
+    REQUIRE(is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    sort_binary_array(numbers);
+
+    REQUIRE(is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {1, 1, 1, 1, 1, 0, 0, 0, 0, 1};
+    sort_binary_array(numbers);
+
+    REQUIRE(is_sorted(numbers.begin(), numbers.end()));
+}

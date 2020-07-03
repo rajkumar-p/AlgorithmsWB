@@ -4,8 +4,7 @@
 #include <numeric>
 #include <unordered_map>
 
-std::vector<double> max_avg_subarray_of_size_k(const std::vector<int> &numbers, size_t k)
-{
+std::vector<double> max_avg_subarray_of_size_k(const std::vector<int> &numbers, size_t k) {
     std::vector<double> result;
 
     if (numbers.size() < k) {
@@ -34,8 +33,7 @@ std::vector<double> max_avg_subarray_of_size_k(const std::vector<int> &numbers, 
     return result;
 }
 
-int max_sum_subarray_of_size_k(const std::vector<int> &numbers, size_t k)
-{
+int max_sum_subarray_of_size_k(const std::vector<int> &numbers, size_t k) {
     if (numbers.size() < k) {
         return std::accumulate(numbers.begin(), numbers.end(), 0);
     }
@@ -56,8 +54,7 @@ int max_sum_subarray_of_size_k(const std::vector<int> &numbers, size_t k)
     return max_sum;
 }
 
-void rotate_elements(std::vector<int> &numbers, unsigned int k)
-{
+void rotate_elements(std::vector<int> &numbers, unsigned int k) {
     for (unsigned int start = 0, end = numbers.size() - 1; start < end; ++start, --end) {
         std::swap(numbers[start], numbers[end]);
     }
@@ -71,8 +68,7 @@ void rotate_elements(std::vector<int> &numbers, unsigned int k)
     }
 }
 
-void replace_array_with_right_side_sum(std::vector<int> &numbers)
-{
+void replace_array_with_right_side_sum(std::vector<int> &numbers) {
     int right_sum = 0;
     for (int i = numbers.size() - 1; i >= 0; --i) {
         int add = numbers[i];
@@ -81,7 +77,7 @@ void replace_array_with_right_side_sum(std::vector<int> &numbers)
     }
 }
 
-unsigned int find_pair_with_given_sum_add_memory(const std::vector<int> &numbers, int sum ) {
+unsigned int find_pair_with_given_sum_add_memory(const std::vector<int> &numbers, int sum) {
     unsigned int pairs = 0;
     std::unordered_map<int, unsigned int> count_map;
     for (unsigned int i = 0; i < numbers.size(); ++i) {
@@ -117,7 +113,7 @@ unsigned int find_pair_with_given_sum_without_add_memory(std::vector<int> &numbe
         int to_find = sum - numbers[i];
         if (to_find == numbers[i]) {
             if ((i > 0 && numbers[i - 1] == to_find) ||
-                    (i + 1 < numbers.size() && numbers[i + 1] == to_find)) {
+                (i + 1 < numbers.size() && numbers[i + 1] == to_find)) {
                 ++pairs;
             }
             continue;
@@ -133,4 +129,110 @@ unsigned int find_pair_with_given_sum_without_add_memory(std::vector<int> &numbe
 
 unsigned int find_pair_with_given_sum(std::vector<int> &numbers, int sum) {
     return find_pair_with_given_sum_without_add_memory(numbers, sum);
+}
+
+std::vector<std::pair<unsigned int, unsigned int>> get_subarrays_with_sum_0(
+        const std::vector<int> &numbers) {
+    std::vector<std::pair<unsigned int, unsigned int>> result;
+
+    std::unordered_map<int, unsigned int> sum_map;
+    int sum = 0;
+    for (unsigned int i = 0; i < numbers.size(); ++i) {
+        if (numbers[i] == 0) {
+            result.push_back(std::make_pair(i, i));
+            continue;
+        }
+
+        sum += numbers[i];
+        if (sum == 0) {
+            result.push_back(std::make_pair(0, i));
+        }
+
+        if (sum_map.find(sum) != sum_map.end()) {
+            result.push_back(std::make_pair(sum_map[sum] + 1, i));
+        }
+
+        sum_map[sum] = i;
+    }
+
+    return result;
+}
+
+unsigned int find_the_one_duplicate_using_pos_neg(std::vector<int> &numbers) {
+    for (unsigned int i = 0; i < numbers.size(); ++i) {
+        unsigned int index = std::abs(numbers[i]) - 1;
+        if (numbers[index] < 0) {
+            return std::abs(numbers[i]);
+        }
+
+        numbers[index] *= -1;
+    }
+
+    return 0;
+}
+
+unsigned int find_the_one_duplicate(std::vector<int> &numbers)
+{
+    return find_the_one_duplicate_using_pos_neg(numbers);
+}
+
+unsigned int largest_subarray_with_consecutive_ints(const std::vector<int> &numbers)
+{
+    unsigned int max_len = 1;
+    std::unordered_map<int, bool> seen_elements;
+    for (unsigned int i = 0; i < numbers.size(); ++i) {
+        int win_min = numbers[i];
+        int win_max = numbers[i];
+        seen_elements[numbers[i]] = true;
+        for (unsigned int j = i + 1; j < numbers.size() &&
+                seen_elements.find(numbers[j]) == seen_elements.end(); ++j) {
+            win_min = std::min(win_min, numbers[j]);
+            win_max = std::max(win_max, numbers[j]);
+            if (static_cast<unsigned int>(win_max - win_min) <= j - i) {
+                unsigned int curr_len = j - i + 1;
+                max_len = std::max(max_len, curr_len);
+            }
+            seen_elements[numbers[j]] = true;
+        }
+
+        seen_elements.clear();
+    }
+
+    return max_len;
+}
+
+unsigned int max_len_subarray_having_sum_k(const std::vector<int> &numbers, int k)
+{
+    unsigned int max_len = 0;
+    for (unsigned int i = 0; i < numbers.size(); ++i) {
+        int current_sum = 0;
+        current_sum += numbers[i];
+        for (unsigned int j = i + 1; j < numbers.size(); ++j) {
+            current_sum += numbers[j];
+            if (current_sum == k) {
+                unsigned int curr_len = j - i + 1;
+                max_len = std::max(max_len, curr_len);
+            }
+        }
+    }
+
+    return max_len;
+}
+
+unsigned int max_len_subarray_having_equal_0s_and_1s(const std::vector<unsigned int> &numbers)
+{
+    unsigned int max_len = 0;
+    for (unsigned int i = 0; i < numbers.size(); ++i) {
+        unsigned int state[2] = {0, 0};
+        state[numbers[i]] += 1;
+        for (unsigned int j = i + 1; j < numbers.size(); ++j) {
+            state[numbers[j]] += 1;
+            if (state[0] == state[1]) {
+                unsigned int curr_len = j - i + 1;
+                max_len = std::max(max_len, curr_len);
+            }
+        }
+    }
+
+    return max_len;
 }
