@@ -199,3 +199,68 @@ TEST_CASE("max_len_subarray_having_equal_0s_and_1s() tests", "[array]")
     numbers = {0, 0, 1, 1, 0};
     REQUIRE(max_len_subarray_having_equal_0s_and_1s(numbers) == 4);
 }
+
+TEST_CASE("move_all_zeros_to_end() tests", "[array]")
+{
+    std::vector<int> numbers;
+    std::vector<int> result;
+
+    numbers = {6, 0, 8, 2, 3, 0, 4, 0, 1};
+    result = {6, 8, 2, 3, 4, 1, 0, 0, 0};
+    move_all_zeros_to_end(numbers);
+    REQUIRE(numbers == result);
+
+    numbers = {8, 3, 0, 0, 0, 0};
+    result = {8, 3, 0, 0, 0, 0};
+    move_all_zeros_to_end(numbers);
+    REQUIRE(numbers == result);
+
+    numbers = {8, 0, 0, 0, 0, 3};
+    result = {8, 3, 0, 0, 0, 0};
+    move_all_zeros_to_end(numbers);
+    REQUIRE(numbers == result);
+
+    numbers = {0, 0, 0, 6, 0, 8, 2, 0, 0, 3, 0, 0, 4, 0, 1, 0, 2, 0, 5};
+    result = {6, 8, 2, 3, 4, 1, 2, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    move_all_zeros_to_end(numbers);
+    REQUIRE(numbers == result);
+}
+
+TEST_CASE("merge_to_partially_filled_array() tests", "[array]")
+{
+    std::vector<int> partial;
+    std::vector<int> rest;
+    std::vector<int> result;
+
+    partial = {0, 2, 0, 3, 0, 5, 6, 0, 0};
+    rest = {1, 8, 9, 10, 15};
+    result = {1, 2, 3, 5, 6, 8, 9, 10, 15};
+
+    merge_to_partially_filled_array(partial, rest);
+    REQUIRE(partial == result);
+
+    partial = {0, 0, 0, 0, 0};
+    rest = {1, 8, 9, 10, 15};
+    result = {1, 8, 9, 10, 15};
+
+    merge_to_partially_filled_array(partial, rest);
+    REQUIRE(partial == result);
+
+    partial = {1, 2, 3, 4, 5};
+    rest = {};
+    result = {1, 2, 3, 4, 5};
+
+    merge_to_partially_filled_array(partial, rest);
+    REQUIRE(partial == result);
+}
+
+TEST_CASE("max_product_with_two_elements() tests", "[array]")
+{
+    std::vector<int> numbers;
+
+    numbers = {-10, -3, 5, 6, -2};
+    REQUIRE(max_product_with_two_elements(numbers) == 30);
+
+    numbers = {-3, 8, 10, -10, 20, 0, 25, 25, -8};
+    REQUIRE(max_product_with_two_elements(numbers) == 625);
+}

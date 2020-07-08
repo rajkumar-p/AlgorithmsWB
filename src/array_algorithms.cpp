@@ -204,15 +204,19 @@ unsigned int largest_subarray_with_consecutive_ints(const std::vector<int> &numb
 unsigned int max_len_subarray_having_sum_k(const std::vector<int> &numbers, int k)
 {
     unsigned int max_len = 0;
+    std::unordered_map<int, int> sum_map;
+    sum_map[0] = -1;
+
+    int curr_sum = 0;
     for (unsigned int i = 0; i < numbers.size(); ++i) {
-        int current_sum = 0;
-        current_sum += numbers[i];
-        for (unsigned int j = i + 1; j < numbers.size(); ++j) {
-            current_sum += numbers[j];
-            if (current_sum == k) {
-                unsigned int curr_len = j - i + 1;
-                max_len = std::max(max_len, curr_len);
-            }
+        curr_sum += numbers[i];
+        if (sum_map.find(curr_sum) == sum_map.end()) {
+            sum_map[curr_sum] = i;
+        }
+
+        if (sum_map.find(curr_sum - k) != sum_map.end()) {
+            unsigned int curr_len = i - (sum_map[curr_sum - k] + 1) + 1;
+            max_len = std::max(max_len, curr_len);
         }
     }
 
@@ -222,17 +226,89 @@ unsigned int max_len_subarray_having_sum_k(const std::vector<int> &numbers, int 
 unsigned int max_len_subarray_having_equal_0s_and_1s(const std::vector<unsigned int> &numbers)
 {
     unsigned int max_len = 0;
+    std::unordered_map<int, unsigned int> sum_map;
+    int curr_sum = 0;
     for (unsigned int i = 0; i < numbers.size(); ++i) {
-        unsigned int state[2] = {0, 0};
-        state[numbers[i]] += 1;
-        for (unsigned int j = i + 1; j < numbers.size(); ++j) {
-            state[numbers[j]] += 1;
-            if (state[0] == state[1]) {
-                unsigned int curr_len = j - i + 1;
-                max_len = std::max(max_len, curr_len);
-            }
+        if (numbers[i] == 0) {
+            curr_sum += -1;
+        } else {
+            curr_sum += 1;
+        }
+
+        if (sum_map.find(curr_sum) == sum_map.end()) {
+            sum_map[curr_sum] = i;
+        } else {
+            unsigned int curr_len = i - (sum_map[curr_sum] + 1) + 1;
+            max_len = std::max(max_len, curr_len);
         }
     }
 
     return max_len;
+}
+
+void move_all_zeros_to_end(std::vector<int> &numbers)
+{
+    unsigned int jump = 0;
+    for (unsigned int i = 0; i < numbers.size(); ++i) {
+        if (numbers[i] == 0) {
+            ++jump;
+        } else {
+            std::swap(numbers[i], numbers[i - jump]);
+        }
+    }
+}
+
+void merge_to_partially_filled_array(std::vector<int> &partial, const std::vector<int> &rest)
+{
+    for (int i = partial.size() - 1, insert = i; i >= 0; --i) {
+        if (partial[i] != 0) {
+            std::swap(partial[insert--], partial[i]);
+        }
+    }
+
+    unsigned int insert = 0;
+    unsigned int partial_index = rest.size();
+    unsigned int rest_index = 0;
+    while (rest_index < rest.size() && partial_index < partial.size()) {
+        if (partial[partial_index] < rest[rest_index]) {
+            partial[insert++] = partial[partial_index++];
+        } else {
+            partial[insert++] = rest[rest_index++];
+        }
+    }
+
+    while (rest_index < rest.size()) {
+        partial[insert++] = rest[rest_index++];
+    }
+
+    while (partial_index < partial.size()) {
+        partial[insert++] = partial[partial_index++];
+    }
+}
+
+int max_product_with_two_elements(const std::vector<int> &numbers)
+{
+    int first_max = std::numeric_limits<int>::min();
+    int second_max = std::numeric_limits<int>::min();
+
+    int first_min = std::numeric_limits<int>::max();
+    int second_min = std::numeric_limits<int>::max();
+
+    for (unsigned int i = 0; i < numbers.size(); ++i) {
+        if (numbers[i] > first_max) {
+            second_max = first_max;
+            first_max = numbers[i];
+        } else if (numbers[i] > second_max) {
+            second_max = numbers[i];
+        }
+
+        if (numbers[i] < first_min) {
+            second_min = first_min;
+            first_min = numbers[i];
+        } else if (numbers[i] < second_min) {
+            second_min = numbers[i];
+        }
+    }
+
+    return std::max(first_max * second_max, first_min * second_min);
 }

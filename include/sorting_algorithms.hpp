@@ -142,4 +142,7 @@ void merge_helper(std::vector<T> &elements, size_t begin,
 
 void sort_binary_array(std::vector<bool> &numbers);
 
+void sort_array_with_0_1_2(std::vector<unsigned short> &numbers);
+void sort_array_with_0_1_2_V2(std::vector<unsigned short> &numbers);
+
 #endif //ALGORITHMSWORKBENCH_SORTING_ALGORITHMS_HPP

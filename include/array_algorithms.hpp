@@ -34,4 +34,13 @@ unsigned int max_len_subarray_having_sum_k(const std::vector<int> &numbers, int 
 // http://www.techiedelight.com/find-maximum-length-sub-array-equal-number-0s-1s/
 unsigned int max_len_subarray_having_equal_0s_and_1s(const std::vector<unsigned int> &numbers);
 
+// http://www.techiedelight.com/move-zeros-present-array-end/
+void move_all_zeros_to_end(std::vector<int> &numbers);
+
+// http://www.techiedelight.com/merge-two-arrays-satisfying-given-constraints/
+void merge_to_partially_filled_array(std::vector<int> &partial, const std::vector<int> &rest);
+
+// http://www.techiedelight.com/find-maximum-product-two-integers-array/
+int max_product_with_two_elements(const std::vector<int> &numbers);
+
 #endif //ALGORITHMSWORKBENCH_ARRAY_ALGORITHMS_HPP

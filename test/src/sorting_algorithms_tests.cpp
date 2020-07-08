@@ -177,3 +177,61 @@ TEST_CASE("sort_binary_array() tests", "[sort]")
 
     REQUIRE(is_sorted(numbers.begin(), numbers.end()));
 }
+
+TEST_CASE("sort_array_with_0_1_2() tests", "[sort]")
+{
+    std::vector<unsigned short> numbers;
+
+    numbers = {1, 1, 0, 2, 0, 0, 1, 2, 2, 0, 1};
+    sort_array_with_0_1_2(numbers);
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {2, 2, 2, 2, 2, 0, 0, 0, 0, 1, 1};
+    sort_array_with_0_1_2(numbers);
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0};
+    sort_array_with_0_1_2(numbers);
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    sort_array_with_0_1_2(numbers);
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    sort_array_with_0_1_2(numbers);
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
+    sort_array_with_0_1_2(numbers);
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+}
+
+TEST_CASE("sort_array_with_0_1_2_V2() tests", "[sort]")
+{
+    std::vector<unsigned short> numbers;
+
+    numbers = {1, 1, 0, 2, 0, 0, 1, 2, 2, 0, 1};
+    sort_array_with_0_1_2_V2(numbers);
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {2, 2, 2, 2, 2, 0, 0, 0, 0, 1, 1};
+    sort_array_with_0_1_2_V2(numbers);
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0};
+    sort_array_with_0_1_2_V2(numbers);
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    sort_array_with_0_1_2_V2(numbers);
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    sort_array_with_0_1_2_V2(numbers);
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
+    sort_array_with_0_1_2_V2(numbers);
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+}
