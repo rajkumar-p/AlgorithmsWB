@@ -43,4 +43,7 @@ void merge_to_partially_filled_array(std::vector<int> &partial, const std::vecto
 // http://www.techiedelight.com/find-maximum-product-two-integers-array/
 int max_product_with_two_elements(const std::vector<int> &numbers);
 
+// http://www.techiedelight.com/find-index-0-replaced-get-maximum-length-sequence-of-continuous-ones/
+unsigned int get_index_to_replace_to_maximize_1s(const std::vector<unsigned short> &numbers);
+
 #endif //ALGORITHMSWORKBENCH_ARRAY_ALGORITHMS_HPP

@@ -312,3 +312,34 @@ int max_product_with_two_elements(const std::vector<int> &numbers)
 
     return std::max(first_max * second_max, first_min * second_min);
 }
+
+unsigned int get_index_to_replace_to_maximize_1s(const std::vector<unsigned short> &numbers)
+{
+    unsigned int index_to_replace = 0;
+    unsigned int max_len = 0;
+
+    unsigned int zero_count = 0;
+    unsigned int last_seen_zero = 0;
+    for (unsigned head = 0, tail = 0; tail < numbers.size(); ++tail) {
+        if (numbers[tail] == 0) {
+            ++zero_count;
+            last_seen_zero = tail;
+        }
+
+        while (head < tail && zero_count > 1) {
+            if (numbers[head] == 0) {
+                --zero_count;
+            }
+
+            ++head;
+        }
+
+        unsigned int curr_len = tail - head + 1;
+        if (curr_len > max_len) {
+            max_len = curr_len;
+            index_to_replace = last_seen_zero;
+        }
+    }
+
+    return index_to_replace;
+}

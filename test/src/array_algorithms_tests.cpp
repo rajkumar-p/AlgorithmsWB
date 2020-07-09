@@ -263,4 +263,24 @@ TEST_CASE("max_product_with_two_elements() tests", "[array]")
 
     numbers = {-3, 8, 10, -10, 20, 0, 25, 25, -8};
     REQUIRE(max_product_with_two_elements(numbers) == 625);
+
+    numbers = {-10, -3, 5, 6, -2, 6};
+    REQUIRE(max_product_with_two_elements(numbers) == 36);
+
+    numbers = {-10, -3, 5, 6, -2, 6, -10};
+    REQUIRE(max_product_with_two_elements(numbers) == 100);
+}
+
+TEST_CASE("get_index_to_replace_to_maximize_1s() tests", "[array]")
+{
+    std::vector<unsigned short> numbers;
+
+    numbers = {0, 0, 1, 0, 1, 1, 1, 0, 1, 1};
+    REQUIRE(get_index_to_replace_to_maximize_1s(numbers) == 7);
+
+    numbers = {0, 0, 1, 0, 1, 1, 0, 0, 1, 1};
+    REQUIRE(get_index_to_replace_to_maximize_1s(numbers) == 3);
+
+    numbers = {0, 1, 1, 0, 1, 1, 0, 0, 1, 1};
+    REQUIRE(get_index_to_replace_to_maximize_1s(numbers) == 3);
 }
