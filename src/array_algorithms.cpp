@@ -1,6 +1,8 @@
 #include "array_algorithms.hpp"
 #include "searching_algorithms.hpp"
 
+#include <algorithm>
+#include <limits>
 #include <numeric>
 #include <unordered_map>
 

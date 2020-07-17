@@ -1,12 +1,12 @@
+#include <algorithm>
 #include <queue>
-#include <iostream>
+
 #include "bstree_algorithms.hpp"
 
 template<typename T>
 void custom_traversal_rcl(
         std::shared_ptr<BSTreeNode<T>> node,
-        const std::function<void(std::shared_ptr<BSTreeNode<T>> node)> &fn)
-{
+        const std::function<void(std::shared_ptr<BSTreeNode<T>> node)> &fn) {
     if (node != nullptr) {
         custom_traversal_rcl(node->_right, fn);
         fn(node);
@@ -15,21 +15,19 @@ void custom_traversal_rcl(
 }
 
 std::shared_ptr<BSTreeNode<int>> bst_to_gst(
-        std::shared_ptr<BSTree<int>> bstree)
-{
+        std::shared_ptr<BSTree<int>> bstree) {
     int accumulator = 0;
     custom_traversal_rcl<int>(bstree->root(),
-            [&accumulator](std::shared_ptr<BSTreeNode<int>> node) {
-                accumulator += node->data();
-                node->set_data(accumulator);
-    });
+                              [&accumulator](std::shared_ptr<BSTreeNode<int>> node) {
+                                  accumulator += node->data();
+                                  node->set_data(accumulator);
+                              });
 
     return bstree->root();
 }
 
 std::vector<std::vector<int>> level_order(
-        std::shared_ptr<BSTree<int>> bstree)
-{
+        std::shared_ptr<BSTree<int>> bstree) {
     if (bstree->root() == nullptr) {
         return {};
     }
@@ -67,8 +65,7 @@ std::vector<std::vector<int>> level_order(
 }
 
 std::vector<std::vector<int>> level_order_reverse(
-        std::shared_ptr<BSTree<int>> bstree)
-{
+        std::shared_ptr<BSTree<int>> bstree) {
     std::vector<std::vector<int>> level_order_reverse =
             level_order(bstree);
 
@@ -78,8 +75,7 @@ std::vector<std::vector<int>> level_order_reverse(
 }
 
 std::vector<std::vector<int>> zigzag_level_order(
-        std::shared_ptr<BSTree<int>> bstree)
-{
+        std::shared_ptr<BSTree<int>> bstree) {
     if (bstree->root() == nullptr) {
         return {};
     }

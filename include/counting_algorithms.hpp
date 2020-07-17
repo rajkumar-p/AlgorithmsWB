@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <list>
+#include <vector>
 
 // https://www.geeksforgeeks.org/counting-inversions/
 template<typename T,

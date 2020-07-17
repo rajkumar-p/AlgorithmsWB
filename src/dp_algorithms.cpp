@@ -1,5 +1,6 @@
 #include "dp_algorithms.hpp"
 
+#include <algorithm>
 #include <unordered_map>
 
 unsigned int smallest_subarray_with_sum_greater_than_x(
