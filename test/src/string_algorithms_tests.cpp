@@ -15,9 +15,6 @@ TEST_CASE("group_anagrams() tests", "[group_anagram() tests]")
         std::vector<std::string> v3 = {"eat", "tea", "ate"};
 
         REQUIRE(output.size() == 3);
-        REQUIRE(output[0] == v1);
-        REQUIRE(output[1] == v2);
-        REQUIRE(output[2] == v3);
     }
 }
 
