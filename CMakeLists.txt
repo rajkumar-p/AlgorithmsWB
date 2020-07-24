@@ -39,7 +39,7 @@ add_executable(aw src/main.cpp include/string_algorithms.hpp src/string_algorith
         include/sorting_algorithms.hpp src/dp_algorithms.cpp include/dp_algorithms.hpp include/bstree.hpp
         src/bstree_algorithms.cpp include/bstree_algorithms.hpp
         src/searching_algorithms.cpp include/searching_algorithms.hpp src/counting_algorithms.cpp
-        include/counting_algorithms.hpp include/binary_search_tree_node.h)
+        include/counting_algorithms.hpp include/binary_search_tree_node.h src/utils.cpp include/utils.h)
 
 add_executable(aw_tests test/src/aw_tests.cpp src/string_algorithms.cpp test/src/string_algorithms_tests.cpp
         src/array_algorithms.cpp include/array_algorithms.hpp test/src/array_algorithms_tests.cpp
@@ -55,7 +55,7 @@ add_executable(aw_profile src/profile.cpp include/string_algorithms.hpp src/stri
         include/sorting_algorithms.hpp src/dp_algorithms.cpp include/dp_algorithms.hpp include/bstree.hpp
         src/bstree_algorithms.cpp include/bstree_algorithms.hpp
         src/searching_algorithms.cpp include/searching_algorithms.hpp src/counting_algorithms.cpp
-        include/counting_algorithms.hpp include/binary_search_tree_node.h)
+        include/counting_algorithms.hpp include/binary_search_tree_node.h src/utils.cpp include/utils.h)
 
 # Package executables to specific directory
 set_target_properties(aw PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/bin/debug)
