@@ -7,3 +7,6 @@ bin/
 
 # Idea
 .idea/
+
+# Python venv directory
+venv/
