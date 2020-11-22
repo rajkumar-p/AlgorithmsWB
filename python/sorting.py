@@ -44,6 +44,47 @@ def bubble_sort(numbers):
     return numbers
 
 
+def merge(numbers, start, mid, end):
+    a = numbers[start:mid+1]
+    b = numbers[mid+1:end+1]
+
+    insert_index = start
+    a_index = b_index = 0
+    while a_index < len(a) and b_index < len(b):
+        if a[a_index] < b[b_index]:
+            numbers[insert_index] = a[a_index]
+            a_index += 1
+        else:
+            numbers[insert_index] = b[b_index]
+            b_index += 1
+        insert_index += 1
+
+    while a_index < len(a):
+        numbers[insert_index] = a[a_index]
+        a_index += 1
+        insert_index += 1
+
+    while b_index < len(b):
+        numbers[insert_index] = b[b_index]
+        b_index += 1
+        insert_index += 1
+
+
+def merge_sort_helper(numbers, start, end):
+    if start >= end:
+        return
+
+    mid = int(((end - start) / 2)) + start
+    merge_sort_helper(numbers, start, mid)
+    merge_sort_helper(numbers, mid + 1, end)
+    merge(numbers, start, mid, end)
+
+
+def merge_sort(numbers):
+    merge_sort_helper(numbers, 0, len(numbers) - 1)
+    return numbers
+
+
 if __name__ == "__main__":
     numbers = get_random_numbers(0, 100, 10)
 
@@ -64,3 +105,9 @@ if __name__ == "__main__":
     sorted_output = bubble_sort(input)
     assert(sorted_output == sorted(numbers))
     print("** Done Testing Bubble Sort **")
+
+    print("===== Testing Merge Sort =====")
+    input = copy.deepcopy(numbers)
+    sorted_output = merge_sort(input)
+    assert(sorted_output == sorted(numbers))
+    print("** Done Testing Merge Sort **")
