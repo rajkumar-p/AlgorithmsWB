@@ -153,6 +153,44 @@ TEST_CASE("merge_sort() tests", "[merge_sort() tests]")
                            std::greater<std::string>()) == true);
 }
 
+TEST_CASE("heap_sort() tests", "[sorting]")
+{
+    std::vector<int> numbers;
+    numbers = {2, 1, 5, 2, 3, 2};
+    heap_sort(numbers);
+
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()) == true);
+
+    numbers = {8, 7, 6, 5, 4, 3, 2, 1};
+    heap_sort(numbers);
+
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()) == true);
+
+    numbers = {2, 1, 5, 2, 3, 2};
+    heap_sort(numbers, std::greater<int>());
+
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end(),
+                           std::greater<int>()) == true);
+
+    numbers = {8, 7, 6, 5, 4, 3, 2, 1};
+    heap_sort(numbers, std::greater<int>());
+
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end(),
+                           std::greater<int>()) == true);
+
+    std::vector<std::string> words;
+    words = {"Hello", "Ana", "Zebra", "Alice", "World", "Moon"};
+    heap_sort(words);
+
+    REQUIRE(std::is_sorted(words.begin(), words.end()) == true);
+
+    words = {"Hello", "Ana", "Zebra", "Alice", "World", "Moon"};
+    heap_sort(words, std::greater<std::string>());
+
+    REQUIRE(std::is_sorted(words.begin(), words.end(),
+                           std::greater<std::string>()) == true);
+}
+
 TEST_CASE("sort_binary_array() tests", "[sort]")
 {
     std::vector<bool> numbers;

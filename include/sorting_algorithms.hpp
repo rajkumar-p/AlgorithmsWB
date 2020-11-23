@@ -40,6 +40,11 @@ template<typename T,
 void merge_helper(std::vector<T> &elements, size_t begin,
                   size_t middle, size_t end, F cmp_fn);
 
+// Heap Sort
+template<typename T,
+        typename F = std::function<bool(T, T)>>
+void heap_sort(std::vector<T> &elements, F cmp_fn = std::less<T>());
+
 /*
  * Method Implementations
  */
@@ -137,6 +142,57 @@ void merge_helper(std::vector<T> &elements, size_t begin,
         elements[insert_index] = l2.front();
         ++insert_index;
         l2.pop_front();
+    }
+}
+
+template<typename T, typename F>
+void heapify(std::vector<T> &elements,
+                 unsigned int start,
+                 unsigned int end,
+                 F cmp_fn)
+{
+    if (start >= end) {
+        return;
+    }
+
+    unsigned int selected = start;
+    unsigned int left_child_index = 2 * start + 1;
+    unsigned int right_child_index = 2 * start + 2;
+
+    if (left_child_index < end &&
+        cmp_fn(elements[selected], elements[left_child_index])) {
+        selected = left_child_index;
+    }
+    if (right_child_index < end &&
+        cmp_fn(elements[selected], elements[right_child_index])) {
+        selected = right_child_index;
+    }
+
+    if (start != selected) {
+        std::swap(elements[start], elements[selected]);
+    } else {
+        return;
+    }
+
+    heapify(elements, selected, end, cmp_fn);
+}
+
+template<typename T, typename F>
+void make_heap(std::vector<T> &elements, F cmp_fn)
+{
+    unsigned int from = (elements.size() / 2) - 1;
+    for (int i = from; i >= 0; --i) {
+        heapify(elements, i, elements.size() - 1, cmp_fn);
+    }
+}
+
+template<typename T, typename F>
+void heap_sort(std::vector<T> &elements, F cmp_fn)
+{
+    make_heap(elements, cmp_fn);
+    for (unsigned int heap_size = elements.size() - 1; heap_size > 0; --heap_size) {
+        std::swap(elements[0], elements[heap_size]);
+        heapify(elements, 0, heap_size - 1, cmp_fn);
     }
 }
 
