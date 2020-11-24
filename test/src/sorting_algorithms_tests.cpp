@@ -1,5 +1,6 @@
 #include "catch.hpp"
 #include "sorting_algorithms.hpp"
+#include "utils.h"
 
 TEST_CASE("insertion_sort() tests", "[insertion_sort() tests]")
 {
@@ -177,6 +178,23 @@ TEST_CASE("heap_sort() tests", "[sorting]")
 
     REQUIRE(std::is_sorted(numbers.begin(), numbers.end(),
                            std::greater<int>()) == true);
+
+    numbers = get_random_numbers<int>(0, 100, 20);
+    heap_sort(numbers);
+
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end()));
+
+    numbers = get_random_numbers<int>(0, 100, 20);
+    heap_sort(numbers, std::greater<int>());
+
+    REQUIRE(std::is_sorted(numbers.begin(), numbers.end(),
+                           std::greater<int>()));
+
+    std::vector<float> decs;
+    decs = get_random_numbers<float>(0.0, 1.0, 10);
+    heap_sort(decs);
+
+    REQUIRE(std::is_sorted(decs.begin(), decs.end()));
 
     std::vector<std::string> words;
     words = {"Hello", "Ana", "Zebra", "Alice", "World", "Moon"};
