@@ -159,22 +159,20 @@ void heapify(std::vector<T> &elements,
     unsigned int left_child_index = 2 * start + 1;
     unsigned int right_child_index = 2 * start + 2;
 
-    if (left_child_index < end &&
+    if (left_child_index <= end &&
         cmp_fn(elements[selected], elements[left_child_index])) {
         selected = left_child_index;
     }
-    if (right_child_index < end &&
+    if (right_child_index <= end &&
         cmp_fn(elements[selected], elements[right_child_index])) {
         selected = right_child_index;
     }
 
     if (start != selected) {
         std::swap(elements[start], elements[selected]);
-    } else {
-        return;
+        heapify(elements, selected, end, cmp_fn);
     }
 
-    heapify(elements, selected, end, cmp_fn);
 }
 
 template<typename T, typename F>
