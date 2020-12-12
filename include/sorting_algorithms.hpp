@@ -145,52 +145,57 @@ void merge_helper(std::vector<T> &elements, size_t begin,
     }
 }
 
-template<typename T, typename F>
-void heapify(std::vector<T> &elements,
-                 unsigned int start,
-                 unsigned int end,
-                 F cmp_fn)
+template<typename T>
+void heapify_subtree(std::vector<T> &elements,
+                     unsigned int index,
+                     unsigned int heap_size,
+                     std::function<bool(T, T)> heap_fn)
 {
-    if (start >= end) {
-        return;
-    }
+    unsigned current_index = index;
+    while (1) {
+        unsigned int replace_index = current_index;
+        unsigned int left_index = 2 * current_index + 1;
+        unsigned int right_index = 2* current_index + 2;
 
-    unsigned int selected = start;
-    unsigned int left_child_index = 2 * start + 1;
-    unsigned int right_child_index = 2 * start + 2;
+        if (left_index < heap_size &&
+            heap_fn(elements[left_index], elements[replace_index])) {
+            replace_index = left_index;
+        }
+        if (right_index < heap_size &&
+            heap_fn(elements[right_index], elements[replace_index])) {
+            replace_index = right_index;
+        }
 
-    if (left_child_index <= end &&
-        cmp_fn(elements[selected], elements[left_child_index])) {
-        selected = left_child_index;
-    }
-    if (right_child_index <= end &&
-        cmp_fn(elements[selected], elements[right_child_index])) {
-        selected = right_child_index;
-    }
+        if (replace_index == current_index) {
+            break;
+        }
 
-    if (start != selected) {
-        std::swap(elements[start], elements[selected]);
-        heapify(elements, selected, end, cmp_fn);
+        std::swap(elements[current_index], elements[replace_index]);
+        current_index = replace_index;
     }
-
 }
 
-template<typename T, typename F>
-void make_heap(std::vector<T> &elements, F cmp_fn)
+template<typename T>
+void make_heap(std::vector<T> &elements,
+               std::function<bool(T, T)> heap_fn)
 {
-    unsigned int from = (elements.size() / 2) - 1;
-    for (int i = from; i >= 0; --i) {
-        heapify(elements, i, elements.size() - 1, cmp_fn);
+    int last_non_leaf_index = (elements.size() / 2) - 1;
+    for (int i = last_non_leaf_index; i >= 0; --i) {
+        heapify_subtree(elements, i, elements.size(), heap_fn);
     }
 }
 
 template<typename T, typename F>
 void heap_sort(std::vector<T> &elements, F cmp_fn)
 {
-    make_heap(elements, cmp_fn);
-    for (unsigned int heap_size = elements.size() - 1; heap_size > 0; --heap_size) {
-        std::swap(elements[0], elements[heap_size]);
-        heapify(elements, 0, heap_size - 1, cmp_fn);
+    // Heap function is the reverse of the comparison function
+    std::function<bool(T, T)> heap_fn = [cmp_fn](T left, T right) {
+        return cmp_fn(right, left);
+    };
+    make_heap(elements, heap_fn);
+    for (unsigned int heap_size = elements.size(); heap_size > 0; --heap_size) {
+        std::swap(elements[0], elements[heap_size - 1]);
+        heapify_subtree(elements, 0, heap_size - 1, heap_fn);
     }
 }
 
