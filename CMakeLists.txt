@@ -39,7 +39,8 @@ add_executable(aw src/main.cpp include/string_algorithms.hpp src/string_algorith
         include/sorting_algorithms.hpp src/dp_algorithms.cpp include/dp_algorithms.hpp include/bstree.hpp
         src/bstree_algorithms.cpp include/bstree_algorithms.hpp
         src/searching_algorithms.cpp include/searching_algorithms.hpp src/counting_algorithms.cpp
-        include/counting_algorithms.hpp include/binary_search_tree_node.h src/utils.cpp include/utils.h src/bit_algorithms.cpp include/bit_algorithms.h)
+        include/counting_algorithms.hpp include/binary_search_tree_node.h src/utils.cpp include/utils.h
+        src/bit_algorithms.cpp include/bit_algorithms.h src/numerical_algorithms.cpp include/numerical_algorithms.hpp)
 
 add_executable(aw_tests test/src/aw_tests.cpp src/string_algorithms.cpp test/src/string_algorithms_tests.cpp
         src/array_algorithms.cpp include/array_algorithms.hpp test/src/array_algorithms_tests.cpp
@@ -48,14 +49,16 @@ add_executable(aw_tests test/src/aw_tests.cpp src/string_algorithms.cpp test/src
         test/src/bstree_tests.cpp src/bstree_algorithms.cpp include/bstree_algorithms.hpp
         test/src/bstree_algorithms_tests.cpp src/searching_algorithms.cpp include/searching_algorithms.hpp
         test/src/searching_algorithms_tests.cpp src/counting_algorithms.cpp include/counting_algorithms.hpp
-        test/src/counting_algorithms_tests.cpp include/binary_search_tree_node.h src/bit_algorithms.cpp test/src/bit_algorithms_tests.cpp)
+        test/src/counting_algorithms_tests.cpp include/binary_search_tree_node.h src/bit_algorithms.cpp
+        test/src/bit_algorithms_tests.cpp src/numerical_algorithms.cpp test/src/numerical_algorithms_tests.cpp)
 
 add_executable(aw_profile src/profile.cpp include/string_algorithms.hpp src/string_algorithms.cpp src/array_algorithms.cpp
         include/array_algorithms.hpp include/bstree_node.hpp src/sorting_algorithms.cpp
         include/sorting_algorithms.hpp src/dp_algorithms.cpp include/dp_algorithms.hpp include/bstree.hpp
         src/bstree_algorithms.cpp include/bstree_algorithms.hpp
         src/searching_algorithms.cpp include/searching_algorithms.hpp src/counting_algorithms.cpp
-        include/counting_algorithms.hpp include/binary_search_tree_node.h src/utils.cpp include/utils.h src/bit_algorithms.cpp include/bit_algorithms.h)
+        include/counting_algorithms.hpp include/binary_search_tree_node.h src/utils.cpp include/utils.h src/bit_algorithms.cpp
+        include/bit_algorithms.h)
 
 # Package executables to specific directory
 set_target_properties(aw PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/bin/debug)
