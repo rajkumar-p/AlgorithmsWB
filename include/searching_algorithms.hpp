@@ -4,67 +4,64 @@
 #include <vector>
 
 template<typename T>
-int binary_search_helper(const std::vector<T> &elements,
-                         int begin, int end, T key)
-{
-    if (begin > end) {
-        return -1;
-    }
-
-    int middle = begin + ((end - begin) / 2);
-    if (elements[middle] == key) {
-        return middle;
-    } else if (elements[middle] < key) {
-        return binary_search_helper(elements, middle + 1, end, key);
-    } else {
-        return binary_search_helper(elements, begin, middle - 1, key);
-    }
-}
-
-template<typename T>
 int binary_search(const std::vector<T> &elements, T key)
 {
-    return binary_search_helper(elements, 0, elements.size() - 1, key);
-}
-
-template<typename T>
-int binary_search_leftmost_helper(const std::vector<int> &elements,
-                                  int begin, int end, T key)
-{
-    if (begin >= end) {
-        if (elements[begin] == key) {
-            return begin;
+    int begin = 0;
+    int end = elements.size() - 1;
+    while (begin <= end) {
+        int mid = begin + (end - begin) / 2;
+        if (key == elements[mid]) {
+            return mid;
+        } else if (key < elements[mid]) {
+            end = mid - 1;
         } else {
-            return -1;
+            begin = mid + 1;
         }
     }
 
-    int middle = begin + ((end - begin) / 2);
-    if (elements[middle] < key) {
-        return binary_search_leftmost_helper(elements, middle + 1, end, key);
-    } else {
-        return binary_search_leftmost_helper(elements, begin, middle, key);
-    }
+    return -1;
 }
 
 template<typename T>
 int binary_search_leftmost(const std::vector<int> &elements, T key)
 {
-    return binary_search_leftmost_helper(elements, 0, elements.size() - 1, key);
-}
+    int begin = 0;
+    int end = elements.size() - 1;
+    while (begin <= end) {
+        int mid = begin + (end - begin) / 2;
+        if (key <= elements[mid]) {
+            end = mid - 1;
+        } else if (key > elements[mid]) {
+            begin = mid + 1;
+        }
+    }
 
-template<typename T>
-int binary_search_rightmost_helper(const std::vector<T> &elements,
-                                   int begin, int end, T key)
-{
-    // To implement
-    return -1;
+    if (begin >= elements.size() || elements[begin] != key) {
+        return -1;
+    }
+
+    return begin;
 }
 
 template<typename T>
 int binary_search_rightmost(const std::vector<T> &elements, T key)
 {
-    return binary_search_rightmost_helper(elements, 0, elements.size() - 1, key);
+    int begin = 0;
+    int end = elements.size() - 1;
+    while (begin <= end) {
+        int mid = begin + (end - begin) / 2;
+        if (key >= elements[mid]) {
+            begin = mid + 1;
+        } else if (key < elements[mid]) {
+            end = mid - 1;
+        }
+    }
+
+    if (end >= elements.size() || elements[end] != key) {
+        return -1;
+    }
+
+    return end;
 }
 
 /*

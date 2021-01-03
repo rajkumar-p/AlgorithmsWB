@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "searching_algorithms.hpp"
 
-TEST_CASE("binary_search() tests", "[binary_search() tests]")
+TEST_CASE("binary_search() tests", "[search][binary_search]")
 {
     std::vector<int> i_elements;
 
@@ -58,9 +58,20 @@ TEST_CASE("binary_search() tests", "[binary_search() tests]")
 
     pos = binary_search(i_elements, 0);
     REQUIRE(pos == -1);
+
+    i_elements = {1};
+
+    pos = binary_search(i_elements, 1);
+    REQUIRE(pos == 0);
+
+    pos = binary_search(i_elements, 5);
+    REQUIRE(pos == -1);
+
+    pos = binary_search(i_elements, 0);
+    REQUIRE(pos == -1);
 }
 
-TEST_CASE("binary_search_leftmost() tests", "[binary_search_leftmost() tests]")
+TEST_CASE("binary_search_leftmost() tests", "[search][binary_search][binary_search_left]")
 {
     std::vector<int> i_elements;
 
@@ -119,11 +130,32 @@ TEST_CASE("binary_search_leftmost() tests", "[binary_search_leftmost() tests]")
 
     pos = binary_search_leftmost(i_elements, 0);
     REQUIRE(pos == -1);
+
+    i_elements = {1};
+
+    pos = binary_search_leftmost(i_elements, 1);
+    REQUIRE(pos == 0);
+
+    pos = binary_search_leftmost(i_elements, 5);
+    REQUIRE(pos == -1);
+
+    pos = binary_search_leftmost(i_elements, 0);
+    REQUIRE(pos == -1);
+
+    i_elements = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+
+    pos = binary_search_leftmost(i_elements, 1);
+    REQUIRE(pos == 0);
+
+    pos = binary_search_leftmost(i_elements, 5);
+    REQUIRE(pos == -1);
+
+    pos = binary_search_leftmost(i_elements, 0);
+    REQUIRE(pos == -1);
 }
 
-TEST_CASE("binary_search_rightmost() tests", "[binary_search_rightmost() tests]")
+TEST_CASE("binary_search_rightmost() tests", "[search][binary_search][binary_search_right]")
 {
-    /*
     std::vector<int> i_elements;
 
     int pos;
@@ -181,7 +213,28 @@ TEST_CASE("binary_search_rightmost() tests", "[binary_search_rightmost() tests]"
 
     pos = binary_search_rightmost(i_elements, 0);
     REQUIRE(pos == -1);
-     */
+
+    i_elements = {1};
+
+    pos = binary_search_rightmost(i_elements, 1);
+    REQUIRE(pos == 0);
+
+    pos = binary_search_rightmost(i_elements, 5);
+    REQUIRE(pos == -1);
+
+    pos = binary_search_rightmost(i_elements, 0);
+    REQUIRE(pos == -1);
+
+    i_elements = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+
+    pos = binary_search_rightmost(i_elements, 1);
+    REQUIRE(pos == 8);
+
+    pos = binary_search_rightmost(i_elements, 5);
+    REQUIRE(pos == -1);
+
+    pos = binary_search_rightmost(i_elements, 0);
+    REQUIRE(pos == -1);
 }
 
 TEST_CASE("sub_optimal_if_exits_x_and_y_equals_sum() tests", "[sub_optimal_if_exits_x_and_y_equals_sum() tests]")
