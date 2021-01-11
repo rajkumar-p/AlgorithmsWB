@@ -284,3 +284,24 @@ TEST_CASE("get_index_to_replace_to_maximize_1s() tests", "[array]")
     numbers = {0, 1, 1, 0, 1, 1, 0, 0, 1, 1};
     REQUIRE(get_index_to_replace_to_maximize_1s(numbers) == 3);
 }
+
+TEST_CASE("next_greater_element() tests", "[array][nge]")
+{
+    std::vector<int> elements;
+    std::vector<int> result;
+
+    elements = {2, 1, 2, 4, 3};
+    result = {4, 2, 4, -1, -1};
+
+    REQUIRE(next_greater_element(elements) == result);
+
+    elements = {4, 5, 2, 25};
+    result = {5, 25, 25, -1};
+
+    REQUIRE(next_greater_element(elements) == result);
+
+    elements = {13, 7, 6, 12};
+    result = {-1, 12, 12, -1};
+
+    REQUIRE(next_greater_element(elements) == result);
+}

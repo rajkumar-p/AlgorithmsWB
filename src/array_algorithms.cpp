@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <limits>
 #include <numeric>
+#include <stack>
 #include <unordered_map>
 
 std::vector<double> max_avg_subarray_of_size_k(const std::vector<int> &numbers, size_t k) {
@@ -344,4 +345,20 @@ unsigned int get_index_to_replace_to_maximize_1s(const std::vector<unsigned shor
     }
 
     return index_to_replace;
+}
+
+std::vector<int> next_greater_element(const std::vector<int> &elements)
+{
+    std::stack<int> stk;
+    std::vector<int> result(elements.size());
+    for (int i = elements.size() - 1; i >= 0; --i) {
+        while (!stk.empty() && elements[i] >= stk.top()) {
+            stk.pop();
+        }
+
+        result[i] = stk.empty() ? -1 : stk.top();
+        stk.push(elements[i]);
+    }
+
+    return result;
 }
