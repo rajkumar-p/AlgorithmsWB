@@ -362,3 +362,19 @@ std::vector<int> next_greater_element(const std::vector<int> &elements)
 
     return result;
 }
+
+std::vector<int> next_higher_temperature(const std::vector<int> &temps)
+{
+    std::stack<int> stk;
+    std::vector<int> result(temps.size());
+    for (int i = temps.size() - 1; i >= 0; --i) {
+        while (!stk.empty() && temps[i] >= temps[stk.top()]) {
+            stk.pop();
+        }
+
+        result[i] = stk.empty() ? -1 : stk.top() - i;
+        stk.push(i);
+    }
+
+    return result;
+}

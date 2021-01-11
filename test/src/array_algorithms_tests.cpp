@@ -305,3 +305,14 @@ TEST_CASE("next_greater_element() tests", "[array][nge]")
 
     REQUIRE(next_greater_element(elements) == result);
 }
+
+TEST_CASE("next_higher_temperature() tests", "[array][nht]")
+{
+    std::vector<int> temps;
+    std::vector<int> result;
+
+    temps = {73, 74, 75, 71, 69, 72, 76, 73};
+    result = {1, 1, 4, 2, 1, 1, -1, -1};
+
+    REQUIRE(next_higher_temperature(temps) == result);
+}

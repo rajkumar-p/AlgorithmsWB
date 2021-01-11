@@ -49,4 +49,7 @@ unsigned int get_index_to_replace_to_maximize_1s(const std::vector<unsigned shor
 // https://www.geeksforgeeks.org/next-greater-element/
 std::vector<int> next_greater_element(const std::vector<int> &elements);
 
+// https://www.geeksforgeeks.org/count-of-days-remaining-for-the-next-day-with-higher-temperature/
+std::vector<int> next_higher_temperature(const std::vector<int> &temps);
+
 #endif //ALGORITHMSWORKBENCH_ARRAY_ALGORITHMS_HPP
