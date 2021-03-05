@@ -2,6 +2,8 @@
 #define ALGORITHMSWORKBENCH_ARRAY_ALGORITHMS_HPP
 
 #include <vector>
+#include <string>
+#include <unordered_map>
 
 // https://www.geeksforgeeks.org/find-maximum-average-subarray-of-k-length/
 // Similar problem, but return all the averages in a std::vector<int>
@@ -51,5 +53,7 @@ std::vector<int> next_greater_element(const std::vector<int> &elements);
 
 // https://www.geeksforgeeks.org/count-of-days-remaining-for-the-next-day-with-higher-temperature/
 std::vector<int> next_higher_temperature(const std::vector<int> &temps);
+
+std::unordered_map<std::string, unsigned int> get_strings_count(const std::vector<std::string> &strings);
 
 #endif //ALGORITHMSWORKBENCH_ARRAY_ALGORITHMS_HPP

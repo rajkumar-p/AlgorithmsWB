@@ -316,3 +316,31 @@ TEST_CASE("next_higher_temperature() tests", "[array][nht]")
 
     REQUIRE(next_higher_temperature(temps) == result);
 }
+
+TEST_CASE("get_strings_count() tests", "[array][gsc]")
+{
+    std::vector<std::string> strings;
+    std::unordered_map<std::string, unsigned int> result;
+
+    strings = { "bat", "bat", "bat", "bat", "bat" };
+    result = get_strings_count(strings);
+
+    REQUIRE(result.size() == 1);
+    REQUIRE(result["bat"] == 5);
+
+    strings = { "jack", "jill", "hill" };
+    result = get_strings_count(strings);
+
+    REQUIRE(result.size() == 3);
+    REQUIRE(result["jack"] == 1);
+    REQUIRE(result["jill"] == 1);
+    REQUIRE(result["hill"] == 1);
+
+    strings = { "alice", "bob", "alice", "zak", "charlie", "charlie" };
+    result = get_strings_count(strings);
+    REQUIRE(result.size() == 4);
+    REQUIRE(result["alice"] == 2);
+    REQUIRE(result["charlie"] == 2);
+    REQUIRE(result["bob"] == 1);
+    REQUIRE(result["zak"] == 1);
+}

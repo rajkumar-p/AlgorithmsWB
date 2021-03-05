@@ -378,3 +378,13 @@ std::vector<int> next_higher_temperature(const std::vector<int> &temps)
 
     return result;
 }
+
+std::unordered_map<std::string, unsigned int> get_strings_count(const std::vector<std::string> &strings)
+{
+    std::unordered_map<std::string, unsigned int> result;
+    for (unsigned int i = 0; i < strings.size(); ++i) {
+        result[strings[i]]++;
+    }
+
+    return result;
+}
