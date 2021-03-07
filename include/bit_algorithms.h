@@ -7,4 +7,6 @@ unsigned int count_ones_better(unsigned int num);
 
 bool bit_parity(unsigned int num);
 
+int convert_byte_order(const int number);
+
 #endif //ALGORITHMSWORKBENCH_BIT_ALGORITHMS_H

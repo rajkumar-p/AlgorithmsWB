@@ -44,3 +44,26 @@ TEST_CASE("bit_parity() tests", "[bits]")
     REQUIRE(bit_parity(589824541) == 0);
     REQUIRE(bit_parity(3881954689) == 1);
 }
+
+TEST_CASE("convert_byte_order() tests", "[bits][cbo]")
+{
+    int num;
+    int result;
+
+    num = 47;
+    result = convert_byte_order(num);
+    REQUIRE(result == 788529152);
+
+    num = 88888;
+    result = convert_byte_order(num);
+    REQUIRE(result == 945488128);
+
+    num = -7;
+    result = convert_byte_order(num);
+    REQUIRE(result == -100663297);
+
+    num = 0;
+    result = convert_byte_order(num);
+    REQUIRE(result == 0);
+}
+
