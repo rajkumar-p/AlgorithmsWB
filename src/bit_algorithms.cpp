@@ -51,23 +51,3 @@ bool bit_parity(unsigned int num) {
     num = num ^ (num >> 1);
     return num & 1;
 }
-
-int convert_byte_order(const int number)
-{
-    // ALGORITHM
-    // 1) Copy number into a stack variable
-    // 2) Place two char * - one in the first byte and one in the last
-    // 3) Reverse contents using the two char *
-    int result = number;
-    char *begin = (char *)&result;
-    char *end = (char *)&result + sizeof(int) - 1;
-    while (begin < end) {
-        char t = *begin;
-        *begin = *end;
-        *end = t;
-        ++begin;
-        --end;
-    }
-
-    return result;
-}
