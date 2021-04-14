@@ -16,6 +16,14 @@ class Graph:
         self._vertices[v_id] = v
         self._adj_list[v] = []
 
+    def add_vertices(self, v_ids):
+        for v_id in v_ids:
+            self.add_vertex(v_id)
+
+    def add_edges(self, v1_v2_id_pairs):
+        for v1_id, v2_id in v1_v2_id_pairs:
+            self.add_edge(v1_id, v2_id)
+
     def add_edge(self, v1_id, v2_id):
         v1 = self._vertices[v1_id]
         v2 = self._vertices[v2_id]
@@ -86,28 +94,20 @@ def print_header(s, filler="%"):
     print(bottom_str)
 
 
+def get_universal_sink_of(graph):
+    return None
+
+def test_get_universal_sink_of(graph):
+    print_header("Testing get_universal_sink_of()")
+
+
+
 if __name__ == "__main__":
     g = Graph("DG 1")
 
-    g.add_vertex(1)
-    g.add_vertex(2)
-    g.add_vertex(3)
-    g.add_vertex(4)
-    g.add_vertex(5)
-    g.add_vertex(6)
-
-    g.add_edge(1, 2)
-    g.add_edge(1, 4)
-    g.add_edge(2, 5)
-    g.add_edge(3, 5)
-    g.add_edge(3, 6)
-    g.add_edge(4, 2)
-    g.add_edge(5, 4)
-    g.add_edge(6, 6)
-
+    g.add_vertices([1, 2, 3, 4, 5, 6])
+    g.add_edges([(1, 2), (1, 4), (2, 5),
+                (3, 5), (3, 6), (4, 2), (5, 4),
+                (6, 6)])
     g.print_graph()
     g.print_adj_matrix()
-
-    ag = Graph("DG 2", g.get_trasposed_list())
-    ag.print_graph()
-    ag.print_adj_matrix()
