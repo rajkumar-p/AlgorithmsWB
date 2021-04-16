@@ -11,6 +11,9 @@ class Graph:
     def set_name(self, new_name):
         self._name = new_name
 
+    def get_vertex(self, v_id):
+        return self._vertices.get(v_id, None)
+
     def add_vertex(self, v_id):
         v = Vertex(v_id)
         self._vertices[v_id] = v
@@ -30,6 +33,9 @@ class Graph:
         if v1 == None or v2 == None:
             return
         self._adj_list[v1].append(v2)
+
+    def get_vertices_count(self):
+        return len(self._vertices)
 
     def get_trasposed_list(self):
         new_adj_list = {}
@@ -52,14 +58,19 @@ class Graph:
             print(" >{}".format("|".join(edges)))
         print()
 
-    def print_adj_matrix(self):
-        print_header("Graph Matrix: {}".format(self._name))
+    def get_adj_matrix(self):
         matrix = []
         for key in self._adj_list.keys():
             l = [0 for _ in range(len(self._adj_list))]
             for v in self._adj_list[key]:
                 l[v.id() - 1] = 1
             matrix.append(l)
+
+        return matrix
+
+    def print_adj_matrix(self):
+        print_header("Graph Matrix: {}".format(self._name))
+        matrix = self.get_adj_matrix()
         for entry in matrix:
             print(entry)
         print()
@@ -94,20 +105,67 @@ def print_header(s, filler="%"):
     print(bottom_str)
 
 
-def get_universal_sink_of(graph):
-    return None
+def print_sub_header(s):
+    sub_header = "  >>>>>{}<<<<<".format(s)
+    print(sub_header)
 
-def test_get_universal_sink_of(graph):
-    print_header("Testing get_universal_sink_of()")
 
+def get_universal_sink(graph):
+    def confirm_vertex_as_sink(matrix, n_vertices, v_id):
+        for j in range(n_vertices):
+            if matrix[v_id][j] == 1:
+                return False
+            if v_id != j and matrix[j][v_id] != 1:
+                return False
+
+        return True
+
+    i = j = 0
+    matrix = graph.get_adj_matrix()
+    n_vertices = graph.get_vertices_count()
+    while i < n_vertices and j < n_vertices:
+        if matrix[i][j] == 0:
+            j = j + 1
+        else:
+            i = i + 1
+
+    if i == n_vertices:
+        return None
+
+    if not confirm_vertex_as_sink(matrix, n_vertices, i):
+        return None
+
+    return graph.get_vertex(i + 1)
+
+def test_get_universal_sink():
+    print_header("Testing get_universal_sink()")
+    print_sub_header("Test 1")
+    g = Graph("dg1")
+    g.add_vertices([1, 2, 3, 4, 5])
+    g.add_edges([(1, 2), (1, 3), (2, 4), (2, 3), (4, 3), (5, 3)])
+    expected_result = g.get_vertex(3)
+    sink = get_universal_sink(g)
+    assert(sink is not None)
+    assert(sink == expected_result)
+
+    print_sub_header("Test 2")
+    g = Graph("dg2")
+    g.add_vertices([1, 2, 3, 4, 5])
+    g.add_edges([(1, 2), (1, 3), (1, 5), (2, 4), (2, 3), (2, 5), (4, 3), (4, 5)])
+    expected_result = None
+    sink = get_universal_sink(g)
+    assert(sink is None)
+    assert(sink == expected_result)
+
+    print_sub_header("Test 3")
+    g = Graph("dg3")
+    g.add_vertices([1, 2, 3, 4, 5, 6])
+    g.add_edges([(1, 2), (3, 2), (4, 2), (5, 2), (6, 2)])
+    expected_result = g.get_vertex(2)
+    sink = get_universal_sink(g)
+    assert(sink is not None)
+    assert(sink == expected_result)
 
 
 if __name__ == "__main__":
-    g = Graph("DG 1")
-
-    g.add_vertices([1, 2, 3, 4, 5, 6])
-    g.add_edges([(1, 2), (1, 4), (2, 5),
-                (3, 5), (3, 6), (4, 2), (5, 4),
-                (6, 6)])
-    g.print_graph()
-    g.print_adj_matrix()
+    test_get_universal_sink()
