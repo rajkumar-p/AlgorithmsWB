@@ -106,8 +106,12 @@ def print_header(s, filler="%"):
 
 
 def print_sub_header(s):
-    sub_header = "  >>>>>{}<<<<<".format(s)
+    sub_header = ":::::{}:::::".format(s)
     print(sub_header)
+
+def print_sub_footer(s):
+    sub_footer = "--{}--".format(s)
+    print(sub_footer)
 
 
 def get_universal_sink(graph):
@@ -147,6 +151,7 @@ def test_get_universal_sink():
     sink = get_universal_sink(g)
     assert(sink is not None)
     assert(sink == expected_result)
+    print_sub_footer("Test 1 - Success")
 
     print_sub_header("Test 2")
     g = Graph("dg2")
@@ -156,6 +161,7 @@ def test_get_universal_sink():
     sink = get_universal_sink(g)
     assert(sink is None)
     assert(sink == expected_result)
+    print_sub_footer("Test 2 - Success")
 
     print_sub_header("Test 3")
     g = Graph("dg3")
@@ -165,6 +171,7 @@ def test_get_universal_sink():
     sink = get_universal_sink(g)
     assert(sink is not None)
     assert(sink == expected_result)
+    print_sub_footer("Test 3 - Success")
 
 
 if __name__ == "__main__":
