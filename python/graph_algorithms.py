@@ -263,6 +263,27 @@ def test_breadth_first_search():
         assert(v.dist() == expected_result[v.id()])
     print_sub_footer("Test 1 - Success")
 
+    print_sub_header("Test 2")
+    g = Graph("g1")
+    g.add_vertices([0, 1, 2, 3])
+    g.add_edges([(0, 1), (0, 2), (2, 0), (2, 3), (3, 3), (1, 2)])
+    expected_result = {0: 1, 1: 2, 2: 0, 3: 1}
+    bfs_tree = breadth_first_search(g, g.get_vertex(2))
+    for v in bfs_tree._adj_list.keys():
+        assert(v.dist() == expected_result[v.id()])
+    print_sub_footer("Test 2 - Success")
+
+    print_sub_header("Test 3")
+    ug = UndirectedGraph("ug2")
+    ug.add_vertices(["A", "B", "C", "D", "E", "F", "G", "H", "S"])
+    ug.add_edges([("A", "B"), ("A", "S"), ("S", "C"), ("S", "G"), ("C", "D"),
+        ("C", "F"), ("G", "F"), ("G", "H"), ("C", "E"), ("E", "H")])
+    expected_result = {"A": 2, "B": 3, "C": 0, "D": 1, "E": 1,
+            "F": 1, "G": 2, "H": 2, "S": 1}
+    bfs_tree = breadth_first_search(ug, ug.get_vertex("C"))
+    for v in bfs_tree._adj_list.keys():
+        assert(v.dist() == expected_result[v.id()])
+    print_sub_footer("Test 3 - Success")
 
 if __name__ == "__main__":
     test_get_universal_sink()
