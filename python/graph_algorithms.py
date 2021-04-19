@@ -1,3 +1,8 @@
+import enum
+import queue
+
+MAX_DIST = 1000000000
+
 class Graph:
     def __init__(self, name, adj_list=None):
         self._name = name
@@ -23,10 +28,6 @@ class Graph:
         for v_id in v_ids:
             self.add_vertex(v_id)
 
-    def add_edges(self, v1_v2_id_pairs):
-        for v1_id, v2_id in v1_v2_id_pairs:
-            self.add_edge(v1_id, v2_id)
-
     def add_edge(self, v1_id, v2_id):
         v1 = self._vertices[v1_id]
         v2 = self._vertices[v2_id]
@@ -34,8 +35,15 @@ class Graph:
             return
         self._adj_list[v1].append(v2)
 
+    def add_edges(self, v1_v2_id_pairs):
+        for v1_id, v2_id in v1_v2_id_pairs:
+            self.add_edge(v1_id, v2_id)
+
     def get_vertices_count(self):
         return len(self._vertices)
+
+    def get_adj_list(self):
+        return self._adj_list
 
     def get_trasposed_list(self):
         new_adj_list = {}
@@ -47,16 +55,6 @@ class Graph:
                 new_adj_list[v].append(key)
 
         return new_adj_list
-
-    def print_graph(self):
-        print_header("Graph: {}".format(self._name))
-        for key in self._adj_list.keys():
-            print("Vertex: {} has {}-out edges".format(key.id(), len(self._adj_list[key])))
-            edges = []
-            for v in self._adj_list[key]:
-                edges.append("({}, {})".format(key.id(), v.id()))
-            print(" >{}".format("|".join(edges)))
-        print()
 
     def get_adj_matrix(self):
         matrix = []
@@ -75,6 +73,16 @@ class Graph:
             print(entry)
         print()
 
+    def print_graph(self):
+        print_header("Graph: {}".format(self._name))
+        for key in self._adj_list.keys():
+            print("Vertex: {} has {}-out edges".format(key.id(), len(self._adj_list[key])))
+            edges = []
+            for v in self._adj_list[key]:
+                edges.append("({}, {})".format(key.id(), v.id()))
+            print(" >{}".format("|".join(edges)))
+        print()
+
 
 class UndirectedGraph(Graph):
     def __init__(self, name):
@@ -85,15 +93,34 @@ class UndirectedGraph(Graph):
         super().add_edge(v2_id, v1_id)
 
 
+# Enum to represent vertex color
+class Color(enum.Enum):
+    WHITE = 0
+    GRAY = 1
+    BLACK = 2
+
+
 class Vertex:
     def __init__(self, id):
         self._id = id
+        self._dist = None
+        self._parent = None
+        self._color = None
 
     def __hash__(self):
         return hash(self._id)
 
     def id(self):
         return self._id
+
+    def dist(self):
+        return self._dist
+
+    def parent(self):
+        return self._parent
+
+    def color(self):
+        return self._color
 
 
 def print_header(s, filler="%"):
@@ -173,6 +200,69 @@ def test_get_universal_sink():
     assert(sink == expected_result)
     print_sub_footer("Test 3 - Success")
 
+    print_sub_header("Test 4")
+    g = Graph("dg4")
+    g.add_vertices([1, 2, 3, 4, 5])
+    g.add_edges([(1, 2), (1, 3), (1, 4), (1, 5), (2, 4), (2, 5), (3, 2), (3, 4), (3, 5), (5, 4)])
+    expected_result = g.get_vertex(4)
+    sink = get_universal_sink(g)
+    assert(sink is not None)
+    assert(sink == expected_result)
+    print_sub_footer("Test 4 - Success")
+
+
+def breadth_first_search(graph, source_vertex):
+    # Init all vertices
+    for key in graph._vertices:
+        v = graph.get_vertex(key)
+        v._parent = None
+        v._dist = MAX_DIST
+        v._color = Color.WHITE
+
+    q = queue.Queue()
+
+    # Init source before putting in q
+    source_vertex._parent = None
+    source_vertex._dist = 0
+    source_vertex._color = Color.GRAY
+
+    q.put(source_vertex)
+
+    # Main loop of the algorithm
+    while not q.empty():
+        v = q.get_nowait()
+        for av in graph._adj_list[v]:
+            if av._color == Color.WHITE:
+                av._parent = v
+                av._dist = v._dist + 1
+                av._color = Color.GRAY
+
+                q.put(av)
+
+        v._color = Color.BLACK
+
+    return graph
+
+
+def test_breadth_first_search():
+    print_header("Testing breadth_first_search()")
+    print_sub_header("Test 1")
+    ug = UndirectedGraph("ug1")
+    ug.add_vertices(["S", "R", "V", "W", "T", "X", "U", "Y"])
+    ug.add_vertices([("S", "R"), ("S", "W"), ("R", "V"), ("W", "T"),
+        ("W", "X"), ("T", "U"), ("T", "X"), ("X", "U"), ("X", "Y"), ("U", "Y")])
+    expected_result = {"S": 0, "R": 1, "W": 1, "V": 2, "T": 2, "X": 2, "U": 3, "Y": 3}
+    bfs_tree = breadth_first_search(ug, ug.get_vertex("S"))
+    for v in bfs_tree._adj_list.keys():
+        print(v.id())
+        print(v.dist())
+        print(expected_result[v.id()])
+        assert(v.dist() == expected_result[v.id()])
+    print_sub_footer("Test 1 - Success")
+
 
 if __name__ == "__main__":
     test_get_universal_sink()
+    print()
+    test_breadth_first_search()
+    print()
