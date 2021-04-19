@@ -31,7 +31,7 @@ class Graph:
     def add_edge(self, v1_id, v2_id):
         v1 = self._vertices[v1_id]
         v2 = self._vertices[v2_id]
-        if v1 == None or v2 == None:
+        if v1 is None or v2 is None:
             return
         self._adj_list[v1].append(v2)
 
@@ -42,10 +42,16 @@ class Graph:
     def get_vertices_count(self):
         return len(self._vertices)
 
+    def get_vertices(self):
+        return self._vertices
+
+    def get_adj_vertices_of(self, vertex):
+        return self._adj_list.get(vertex, None)
+
     def get_adj_list(self):
         return self._adj_list
 
-    def get_trasposed_list(self):
+    def get_transposed_list(self):
         new_adj_list = {}
         for key in self._adj_list.keys():
             new_adj_list[key] = []
@@ -213,7 +219,7 @@ def test_get_universal_sink():
 
 def breadth_first_search(graph, source_vertex):
     # Init all vertices
-    for key in graph._vertices:
+    for key in graph.get_vertices():
         v = graph.get_vertex(key)
         v._parent = None
         v._dist = MAX_DIST
@@ -231,10 +237,10 @@ def breadth_first_search(graph, source_vertex):
     # Main loop of the algorithm
     while not q.empty():
         v = q.get_nowait()
-        for av in graph._adj_list[v]:
-            if av._color == Color.WHITE:
+        for av in graph.get_adj_vertices_of(v):
+            if av.color() == Color.WHITE:
                 av._parent = v
-                av._dist = v._dist + 1
+                av._dist = v.dist() + 1
                 av._color = Color.GRAY
 
                 q.put(av)
@@ -249,7 +255,7 @@ def test_breadth_first_search():
     print_sub_header("Test 1")
     ug = UndirectedGraph("ug1")
     ug.add_vertices(["S", "R", "V", "W", "T", "X", "U", "Y"])
-    ug.add_vertices([("S", "R"), ("S", "W"), ("R", "V"), ("W", "T"),
+    ug.add_edges([("S", "R"), ("S", "W"), ("R", "V"), ("W", "T"),
         ("W", "X"), ("T", "U"), ("T", "X"), ("X", "U"), ("X", "Y"), ("U", "Y")])
     expected_result = {"S": 0, "R": 1, "W": 1, "V": 2, "T": 2, "X": 2, "U": 3, "Y": 3}
     bfs_tree = breadth_first_search(ug, ug.get_vertex("S"))
