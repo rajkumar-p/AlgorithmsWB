@@ -259,7 +259,8 @@ def test_breadth_first_search():
         ("W", "X"), ("T", "U"), ("T", "X"), ("X", "U"), ("X", "Y"), ("U", "Y")])
     expected_result = {"S": 0, "R": 1, "W": 1, "V": 2, "T": 2, "X": 2, "U": 3, "Y": 3}
     bfs_tree = breadth_first_search(ug, ug.get_vertex("S"))
-    for v in bfs_tree._adj_list.keys():
+    for v_id in bfs_tree.get_vertices():
+        v = bfs_tree.get_vertex(v_id)
         assert(v.dist() == expected_result[v.id()])
     print_sub_footer("Test 1 - Success")
 
@@ -269,7 +270,8 @@ def test_breadth_first_search():
     g.add_edges([(0, 1), (0, 2), (2, 0), (2, 3), (3, 3), (1, 2)])
     expected_result = {0: 1, 1: 2, 2: 0, 3: 1}
     bfs_tree = breadth_first_search(g, g.get_vertex(2))
-    for v in bfs_tree._adj_list.keys():
+    for v_id in bfs_tree.get_vertices():
+        v = bfs_tree.get_vertex(v_id)
         assert(v.dist() == expected_result[v.id()])
     print_sub_footer("Test 2 - Success")
 
@@ -281,7 +283,8 @@ def test_breadth_first_search():
     expected_result = {"A": 2, "B": 3, "C": 0, "D": 1, "E": 1,
             "F": 1, "G": 2, "H": 2, "S": 1}
     bfs_tree = breadth_first_search(ug, ug.get_vertex("C"))
-    for v in bfs_tree._adj_list.keys():
+    for v_id in bfs_tree.get_vertices():
+        v = bfs_tree.get_vertex(v_id)
         assert(v.dist() == expected_result[v.id()])
     print_sub_footer("Test 3 - Success")
 
