@@ -260,9 +260,6 @@ def test_breadth_first_search():
     expected_result = {"S": 0, "R": 1, "W": 1, "V": 2, "T": 2, "X": 2, "U": 3, "Y": 3}
     bfs_tree = breadth_first_search(ug, ug.get_vertex("S"))
     for v in bfs_tree._adj_list.keys():
-        print(v.id())
-        print(v.dist())
-        print(expected_result[v.id()])
         assert(v.dist() == expected_result[v.id()])
     print_sub_footer("Test 1 - Success")
 
