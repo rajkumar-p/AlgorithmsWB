@@ -11,5 +11,6 @@ bin/
 # Python venv directory
 venv/
 
-# Ctags folder
+# Ctags folder and files
 tags/
+tags
