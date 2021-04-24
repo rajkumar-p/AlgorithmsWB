@@ -112,6 +112,8 @@ class Vertex:
         self._dist = None
         self._parent = None
         self._color = None
+        self._start = None
+        self._end = None
 
     def __hash__(self):
         return hash(self._id)
@@ -287,6 +289,52 @@ def test_breadth_first_search():
         v = bfs_tree.get_vertex(v_id)
         assert(v.dist() == expected_result[v.id()])
     print_sub_footer("Test 3 - Success")
+
+
+class Incr:
+    def __init__(self, start):
+        self._counter = start
+
+    def get_counter(self):
+        ret = self._counter
+        self._counter = self._counter + 1
+        return ret
+
+
+def depth_first_search(graph):
+    for v_id in graph.get_vertices():
+        v = graph.get_vertex(v_id)
+        v._color = Color.WHITE
+        v._dist = MAX_DIST
+
+    incr = Incr(0)
+    for v_id in graph.get_vertices():
+        v = graph.get_vertex(v_id)
+        if v.color() == Color.WHITE:
+            v._dist = 0
+            v._color = Color.GRAY
+            v._start = incr.get_counter()
+            dfs(v, incr)
+
+    return graph
+
+
+def dfs(graph, v, incr):
+    for av in graph.get_adj_vertices_of(v):
+        if av.color() == Color.WHITE:
+            av._dist = v.dist() + 1
+            av._color = Color.GRAY
+            av._parent = v
+            av._start = incr.get_counter()
+            dfs(graph, av)
+
+    v._color = Color.BLACK
+    v._end = incr.get_counter()
+
+
+def test_depth_first_search():
+    pass
+
 
 if __name__ == "__main__":
     test_get_universal_sink()
