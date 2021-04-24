@@ -332,6 +332,42 @@ def dfs(graph, v, incr):
     v._end = incr.get_counter()
 
 
+def depth_first_search2(graph):
+    for v_id in graph.get_vertices():
+        v = graph.get_vertex(v_id)
+        v._color = Color.WHITE
+        v._dist = MAX_DIST
+        v._parent = None
+
+    incr = Incr(0)
+    for v_id in graph.get_vertices():
+        v = graph.get_vertex(v_id)
+        if v.color() == Color.WHITE:
+            v._dist = 0
+            dfs2(graph, v, incr)
+
+    return graph
+
+
+def dfs2(graph, v, incr):
+    stk = [v]
+    while len(stk) != 0:
+        tv = stk[-1]
+        if tv.color() == Color.WHITE:
+            tv._color = Color.GRAY
+            tv._start = incr.get_counter()
+            for av in graph.get_adj_vertices_of(tv):
+                if av.color() == Color.WHITE:
+                    av._parent = tv
+                    av._dist = tv.dist() + 1
+                    stk.append(av)
+        elif tv.color() == Color.GRAY:
+            tv._color = Color.BLACK
+            tv._end = incr.get_counter()
+            stk.pop()
+        else:
+            stk.pop()
+
 def test_depth_first_search():
     print_header("Testing depth_first_search()")
     print_sub_header("Test 1")
@@ -358,10 +394,37 @@ def test_depth_first_search():
     print_sub_footer("Test 3 - Success")
 
 
+def test_depth_first_search2():
+    print_header("Testing depth_first_search2()")
+    print_sub_header("Test 1")
+    ug = UndirectedGraph("ug1")
+    ug.add_vertices(["S", "R", "V", "W", "T", "X", "U", "Y"])
+    ug.add_edges([("S", "R"), ("S", "W"), ("R", "V"), ("W", "T"),
+                  ("W", "X"), ("T", "U"), ("T", "X"), ("X", "U"), ("X", "Y"), ("U", "Y")])
+    _ = depth_first_search2(ug)
+    print_sub_footer("Test 1 - Success")
+
+    print_sub_header("Test 2")
+    g = Graph("g1")
+    g.add_vertices([0, 1, 2, 3])
+    g.add_edges([(0, 1), (0, 2), (2, 0), (2, 3), (3, 3), (1, 2)])
+    _ = depth_first_search2(g)
+    print_sub_footer("Test 2 - Success")
+
+    print_sub_header("Test 3")
+    ug = UndirectedGraph("ug2")
+    ug.add_vertices(["A", "B", "C", "D", "E", "F", "G", "H", "S"])
+    ug.add_edges([("A", "B"), ("A", "S"), ("S", "C"), ("S", "G"), ("C", "D"),
+                  ("C", "F"), ("G", "F"), ("G", "H"), ("C", "E"), ("E", "H")])
+    _ = depth_first_search2(ug)
+    print_sub_footer("Test 3 - Success")
+
 if __name__ == "__main__":
     test_get_universal_sink()
     print()
     test_breadth_first_search()
     print()
     test_depth_first_search()
+    print()
+    test_depth_first_search2()
     print()
