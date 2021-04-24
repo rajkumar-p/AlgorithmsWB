@@ -314,7 +314,7 @@ def depth_first_search(graph):
             v._dist = 0
             v._color = Color.GRAY
             v._start = incr.get_counter()
-            dfs(v, incr)
+            dfs(graph, v, incr)
 
     return graph
 
@@ -326,18 +326,42 @@ def dfs(graph, v, incr):
             av._color = Color.GRAY
             av._parent = v
             av._start = incr.get_counter()
-            dfs(graph, av)
+            dfs(graph, av, incr)
 
     v._color = Color.BLACK
     v._end = incr.get_counter()
 
 
 def test_depth_first_search():
-    pass
+    print_header("Testing depth_first_search()")
+    print_sub_header("Test 1")
+    ug = UndirectedGraph("ug1")
+    ug.add_vertices(["S", "R", "V", "W", "T", "X", "U", "Y"])
+    ug.add_edges([("S", "R"), ("S", "W"), ("R", "V"), ("W", "T"),
+                  ("W", "X"), ("T", "U"), ("T", "X"), ("X", "U"), ("X", "Y"), ("U", "Y")])
+    _ = depth_first_search(ug)
+    print_sub_footer("Test 1 - Success")
+
+    print_sub_header("Test 2")
+    g = Graph("g1")
+    g.add_vertices([0, 1, 2, 3])
+    g.add_edges([(0, 1), (0, 2), (2, 0), (2, 3), (3, 3), (1, 2)])
+    _ = depth_first_search(g)
+    print_sub_footer("Test 2 - Success")
+
+    print_sub_header("Test 3")
+    ug = UndirectedGraph("ug2")
+    ug.add_vertices(["A", "B", "C", "D", "E", "F", "G", "H", "S"])
+    ug.add_edges([("A", "B"), ("A", "S"), ("S", "C"), ("S", "G"), ("C", "D"),
+                  ("C", "F"), ("G", "F"), ("G", "H"), ("C", "E"), ("E", "H")])
+    _ = depth_first_search(ug)
+    print_sub_footer("Test 3 - Success")
 
 
 if __name__ == "__main__":
     test_get_universal_sink()
     print()
     test_breadth_first_search()
+    print()
+    test_depth_first_search()
     print()
