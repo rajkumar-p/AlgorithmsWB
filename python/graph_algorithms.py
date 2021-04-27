@@ -350,23 +350,22 @@ def depth_first_search2(graph):
 
 
 def dfs2(graph, v, incr):
+    v._color = Color.GRAY
     stk = [v]
     while len(stk) != 0:
         tv = stk[-1]
-        if tv.color() == Color.WHITE:
-            tv._color = Color.GRAY
-            tv._start = incr.get_counter()
-            for av in graph.get_adj_vertices_of(tv):
-                if av.color() == Color.WHITE:
-                    av._parent = tv
-                    av._dist = tv.dist() + 1
-                    stk.append(av)
-        elif tv.color() == Color.GRAY:
-            tv._color = Color.BLACK
+        if tv.color() == Color.BLACK:
             tv._end = incr.get_counter()
             stk.pop()
         else:
-            stk.pop()
+            tv._start = incr.get_counter()
+            for av in graph.get_adj_vertices_of(tv):
+                if av.color() == Color.WHITE:
+                    av._color = Color.GRAY
+                    av._dist = tv.dist() + 1
+                    av._parent = tv
+                    stk.append(av)
+            tv._color = Color.BLACK
 
 def test_depth_first_search():
     print_header("Testing depth_first_search()")
