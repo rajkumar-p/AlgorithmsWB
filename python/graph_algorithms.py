@@ -340,28 +340,28 @@ def depth_first_search2(graph):
         v._parent = None
 
     incr = Incr(0)
-    paran_str = []
+    parenthesis = []
     for v_id in graph.get_vertices():
         v = graph.get_vertex(v_id)
         if v.color() == Color.WHITE:
             v._dist = 0
-            dfs2(graph, v, incr, paran_str)
+            dfs2(graph, v, incr, parenthesis)
 
     return graph
 
 
-def dfs2(graph, v, incr, paran_str):
+def dfs2(graph, v, incr, parenthesis):
     v._color = Color.GRAY
     stk = [v]
     while len(stk) != 0:
         tv = stk[-1]
         if tv.color() == Color.BLACK:
             tv._end = incr.get_counter()
-            paran_str.append(" {})".format(tv.id()))
+            parenthesis.append(" {})".format(tv.id()))
             stk.pop()
         else:
             tv._start = incr.get_counter()
-            paran_str.append(" ({}".format(tv.id()))
+            parenthesis.append(" ({}".format(tv.id()))
             for av in graph.get_adj_vertices_of(tv):
                 if av.color() == Color.WHITE:
                     av._color = Color.GRAY
