@@ -130,6 +130,47 @@ class Vertex:
     def color(self):
         return self._color
 
+    def start(self):
+        return self._start
+
+    def end(self):
+        return self._end
+
+
+# Enum to represent edge type
+class EdgeType(enum.Enum):
+    TREE_EDGE = 0
+    BACK_EDGE = 1
+    FORWARD_EDGE = 2
+    CROSS_EDGE = 3
+
+
+class EdgeClassification:
+    def __init__(self, fr, to, edge_type):
+        self._fr = fr
+        self._to = to
+        self._edge_type = edge_type
+
+    def fr(self):
+        return self._fr
+
+    def fr_str(self):
+        return self._fr.id()
+
+    def to(self):
+        return self._to
+
+    def to_str(self):
+        return self._to.id()
+
+    def edge_type(self):
+        if self._edge_type == EdgeType.TREE_EDGE:
+            return "Tree Edge"
+        elif self._edge_type == EdgeType.BACK_EDGE:
+            return "Back Edge"
+        else:
+            return "Forward Edge"
+
 
 def print_header(s, filler="%"):
     header_str = "{0}-----{1}-----{0}".format(filler, s)
@@ -301,7 +342,7 @@ class Incr:
         return ret
 
 
-def depth_first_search(graph):
+def depth_first_search(graph, edge_classification=None):
     for v_id in graph.get_vertices():
         v = graph.get_vertex(v_id)
         v._color = Color.WHITE
@@ -314,7 +355,10 @@ def depth_first_search(graph):
             v._dist = 0
             v._color = Color.GRAY
             v._start = incr.get_counter()
-            dfs(graph, v, incr)
+            if edge_classification is None:
+                dfs(graph, v, incr)
+            else:
+                dfs_with_edge_classification(graph, v, incr, edge_classification)
 
     return graph
 
@@ -327,6 +371,24 @@ def dfs(graph, v, incr):
             av._parent = v
             av._start = incr.get_counter()
             dfs(graph, av, incr)
+
+    v._color = Color.BLACK
+    v._end = incr.get_counter()
+
+
+def dfs_with_edge_classification(graph, v, incr, edge_classification):
+    for av in graph.get_adj_vertices_of(v):
+        if av.color() == Color.WHITE:
+            edge_classification.append(EdgeClassification(v, av, EdgeType.TREE_EDGE))
+            av._dist = v.dist() + 1
+            av._color = Color.GRAY
+            av._parent = v
+            av._start = incr.get_counter()
+            dfs_with_edge_classification(graph, av, incr, edge_classification)
+        elif av.color() == Color.GRAY:
+            edge_classification.append(EdgeClassification(v, av, EdgeType.BACK_EDGE))
+        else:
+            edge_classification.append(EdgeClassification(v, av, EdgeType.FORWARD_EDGE))
 
     v._color = Color.BLACK
     v._end = incr.get_counter()
