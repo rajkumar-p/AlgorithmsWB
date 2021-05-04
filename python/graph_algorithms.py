@@ -42,8 +42,18 @@ class Graph:
     def get_vertices_count(self):
         return len(self._vertices)
 
+    def get_vertices_ids(self):
+        ids = []
+        for v_id in self._vertices:
+            ids.append(v_id)
+        return ids
+
     def get_vertices(self):
-        return self._vertices
+        vertices = []
+        for v_id in self._vertices:
+            v = self.get_vertex(v_id)
+            vertices.append(v)
+        return vertices
 
     def get_adj_vertices_of(self, vertex):
         return self._adj_list.get(vertex, None)
@@ -262,8 +272,7 @@ def test_get_universal_sink():
 
 def breadth_first_search(graph, source_vertex):
     # Init all vertices
-    for key in graph.get_vertices():
-        v = graph.get_vertex(key)
+    for v in graph.get_vertices():
         v._parent = None
         v._dist = MAX_DIST
         v._color = Color.WHITE
@@ -302,8 +311,7 @@ def test_breadth_first_search():
         ("W", "X"), ("T", "U"), ("T", "X"), ("X", "U"), ("X", "Y"), ("U", "Y")])
     expected_result = {"S": 0, "R": 1, "W": 1, "V": 2, "T": 2, "X": 2, "U": 3, "Y": 3}
     bfs_tree = breadth_first_search(ug, ug.get_vertex("S"))
-    for v_id in bfs_tree.get_vertices():
-        v = bfs_tree.get_vertex(v_id)
+    for v in bfs_tree.get_vertices():
         assert(v.dist() == expected_result[v.id()])
     print_sub_footer("Test 1 - Success")
 
@@ -313,8 +321,7 @@ def test_breadth_first_search():
     g.add_edges([(0, 1), (0, 2), (2, 0), (2, 3), (3, 3), (1, 2)])
     expected_result = {0: 1, 1: 2, 2: 0, 3: 1}
     bfs_tree = breadth_first_search(g, g.get_vertex(2))
-    for v_id in bfs_tree.get_vertices():
-        v = bfs_tree.get_vertex(v_id)
+    for v in bfs_tree.get_vertices():
         assert(v.dist() == expected_result[v.id()])
     print_sub_footer("Test 2 - Success")
 
@@ -326,8 +333,7 @@ def test_breadth_first_search():
     expected_result = {"A": 2, "B": 3, "C": 0, "D": 1, "E": 1,
             "F": 1, "G": 2, "H": 2, "S": 1}
     bfs_tree = breadth_first_search(ug, ug.get_vertex("C"))
-    for v_id in bfs_tree.get_vertices():
-        v = bfs_tree.get_vertex(v_id)
+    for v in bfs_tree.get_vertices():
         assert(v.dist() == expected_result[v.id()])
     print_sub_footer("Test 3 - Success")
 
@@ -343,15 +349,13 @@ class Incr:
 
 
 def depth_first_search(graph):
-    for v_id in graph.get_vertices():
-        v = graph.get_vertex(v_id)
+    for v in graph.get_vertices():
         v._color = Color.WHITE
         v._dist = MAX_DIST
 
     incr = Incr(0)
     edges = []
-    for v_id in graph.get_vertices():
-        v = graph.get_vertex(v_id)
+    for v in graph.get_vertices():
         if v.color() == Color.WHITE:
             v._dist = 0
             v._color = Color.GRAY
@@ -380,16 +384,14 @@ def dfs(graph, v, incr, edges):
 
 
 def depth_first_search2(graph):
-    for v_id in graph.get_vertices():
-        v = graph.get_vertex(v_id)
+    for v in graph.get_vertices():
         v._color = Color.WHITE
         v._dist = MAX_DIST
         v._parent = None
 
     incr = Incr(0)
     edges = []
-    for v_id in graph.get_vertices():
-        v = graph.get_vertex(v_id)
+    for v in graph.get_vertices():
         if v.color() == Color.WHITE:
             v._dist = 0
             dfs2(graph, v, incr, edges)
