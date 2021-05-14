@@ -55,6 +55,14 @@ class Graph:
             vertices.append(v)
         return vertices
 
+    def get_edges(self):
+        edges = []
+        for v in self.get_adj_list():
+            adj_vertices = self.get_adj_vertices_of(v)
+            for av in adj_vertices:
+                edges.append(Edge(v, av))
+        return edges
+
     def get_adj_vertices_of(self, vertex):
         return self._adj_list.get(vertex, None)
 
@@ -145,6 +153,24 @@ class Vertex:
 
     def end(self):
         return self._end
+
+
+class Edge:
+    def __init__(self, fr, to):
+        self._fr = fr
+        self._to = to
+
+    def fr(self):
+        return self._fr
+
+    def fr_str(self):
+        return self._fr.id()
+
+    def to(self):
+        return self._to
+
+    def to_str(self):
+        return self._to.id()
 
 
 # Enum to represent edge type
@@ -354,30 +380,24 @@ def depth_first_search(graph):
         v._dist = MAX_DIST
 
     incr = Incr(0)
-    edges = []
     for v in graph.get_vertices():
         if v.color() == Color.WHITE:
             v._dist = 0
             v._color = Color.GRAY
             v._start = incr.get_counter()
-            dfs(graph, v, incr, edges)
+            dfs(graph, v, incr)
 
-    return graph, edges
+    return graph
 
 
-def dfs(graph, v, incr, edges):
+def dfs(graph, v, incr):
     for av in graph.get_adj_vertices_of(v):
         if av.color() == Color.WHITE:
-            edges.append(EdgeClassification(v, av, EdgeType.TREE_EDGE))
             av._dist = v.dist() + 1
             av._color = Color.GRAY
             av._parent = v
             av._start = incr.get_counter()
-            dfs(graph, av, incr, edges)
-        elif av.color() == Color.GRAY:
-            edges.append(EdgeClassification(v, av, EdgeType.BACK_EDGE))
-        else:
-            edges.append(EdgeClassification(v, av, EdgeType.FORWARD_EDGE))
+            dfs(graph, av, incr)
 
     v._color = Color.BLACK
     v._end = incr.get_counter()
@@ -390,16 +410,15 @@ def depth_first_search2(graph):
         v._parent = None
 
     incr = Incr(0)
-    edges = []
     for v in graph.get_vertices():
         if v.color() == Color.WHITE:
             v._dist = 0
-            dfs2(graph, v, incr, edges)
+            dfs2(graph, v, incr)
 
-    return graph, edges
+    return graph
 
 
-def dfs2(graph, v, incr, edges):
+def dfs2(graph, v, incr):
     v._color = Color.GRAY
     stk = [v]
     while len(stk) != 0:
@@ -411,17 +430,13 @@ def dfs2(graph, v, incr, edges):
             tv._start = incr.get_counter()
             for av in graph.get_adj_vertices_of(tv):
                 if av.color() == Color.WHITE:
-                    edges.append(EdgeClassification(tv, av, EdgeType.TREE_EDGE))
                     av._color = Color.GRAY
                     av._dist = tv.dist() + 1
                     av._parent = tv
                     stk.append(av)
-                elif av.end() is None:
-                    edges.append(EdgeClassification(tv, av, EdgeType.BACK_EDGE))
-                elif av.end() is not None:
-                    edges.append(EdgeClassification(tv, av, EdgeType.FORWARD_EDGE))
 
             tv._color = Color.BLACK
+
 
 def test_depth_first_search():
     print_header("Testing depth_first_search()")
@@ -456,14 +471,14 @@ def test_depth_first_search2():
     ug.add_vertices(["S", "R", "V", "W", "T", "X", "U", "Y"])
     ug.add_edges([("S", "R"), ("S", "W"), ("R", "V"), ("W", "T"),
                   ("W", "X"), ("T", "U"), ("T", "X"), ("X", "U"), ("X", "Y"), ("U", "Y")])
-    _, _ = depth_first_search2(ug)
+    _ = depth_first_search2(ug)
     print_sub_footer("Test 1 - Success")
 
     print_sub_header("Test 2")
     g = Graph("g1")
     g.add_vertices([0, 1, 2, 3])
     g.add_edges([(0, 1), (0, 2), (2, 0), (2, 3), (3, 3), (1, 2)])
-    _, _ = depth_first_search2(g)
+    _ = depth_first_search2(g)
     print_sub_footer("Test 2 - Success")
 
     print_sub_header("Test 3")
@@ -471,7 +486,7 @@ def test_depth_first_search2():
     ug.add_vertices(["A", "B", "C", "D", "E", "F", "G", "H", "S"])
     ug.add_edges([("A", "B"), ("A", "S"), ("S", "C"), ("S", "G"), ("C", "D"),
                   ("C", "F"), ("G", "F"), ("G", "H"), ("C", "E"), ("E", "H")])
-    _, _ = depth_first_search2(ug)
+    _ = depth_first_search2(ug)
     print_sub_footer("Test 3 - Success")
 
 if __name__ == "__main__":
@@ -483,3 +498,27 @@ if __name__ == "__main__":
     print()
     test_depth_first_search2()
     print()
+    # ug = UndirectedGraph("ug2")
+    # ug.add_vertices(["A", "B", "C", "D", "E", "F", "G", "H", "S"])
+    # ug.add_edges([("A", "B"), ("A", "S"), ("S", "C"), ("S", "G"), ("C", "D"),
+    #               ("C", "F"), ("G", "F"), ("G", "H"), ("C", "E"), ("E", "H")])
+    # dfs_tree = depth_first_search(ug)
+    # edges = dfs_tree.get_edges()
+    # print("Len of edges: {}".format(len(edges)))
+    # for edge in edges:
+    #     print("{}----{}".format(edge.fr_str(), edge.to_str()))
+    # for v in dfs_tree.get_vertices():
+    #     parent = v.parent()
+    #     parent_id = "NA"
+    #     if parent is not None:
+    #         parent_id = parent.id()
+    #     print("{} - ({}, {})[{}]".format(v.id(), v.start(), v.end(), parent_id))
+    # edges = []
+    # for v in dfs_tree.get_adj_list():
+    #     adj_vertices = dfs_tree.get_adj_vertices_of(v)
+    #     for av in adj_vertices:
+    #         edge_type = classify_dfs_edge(v, av)
+    #         edges.append("{}--->{}[{}]".format(v.id(), av.id(), edge_type))
+    # print("Len of edges: {}".format(len(edges)))
+    # for edge in edges:
+    #     print(edge)
