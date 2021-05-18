@@ -438,6 +438,40 @@ def dfs2(graph, v, incr):
             tv._color = Color.BLACK
 
 
+def topological_sort(graph):
+    for v in graph.get_vertices():
+        v._color = Color.WHITE
+        v._start = v._end = None
+        v._parent = None
+
+    incr = Incr(0)
+    order_list = []
+    for v in graph.get_vertices():
+        if v.color() == Color.WHITE:
+            topo_sort(graph, v, incr, order_list)
+    return order_list
+
+
+def topo_sort(graph, v, incr, order_list):
+    v._color = Color.GRAY
+    v._start = incr.get_counter()
+    stk = [v]
+    while not len(stk) == 0:
+        tv = stk[-1]
+        if tv.color() == Color.BLACK:
+            tv.end = incr.get_counter()
+            order_list.append(tv)
+            stk.pop()
+        else:
+            for av in graph.get_adj_vertices_of(tv):
+                if av.color() == Color.WHITE:
+                    av._color = Color.GRAY
+                    av._parent = tv
+                    av._start = incr.get_counter()
+                    stk.append(av)
+            tv._color = Color.BLACK
+
+
 def test_depth_first_search():
     print_header("Testing depth_first_search()")
     print_sub_header("Test 1")
@@ -489,6 +523,31 @@ def test_depth_first_search2():
     _ = depth_first_search2(ug)
     print_sub_footer("Test 3 - Success")
 
+
+def test_topological_sort():
+    print_header("Testing topological_sort()")
+    print_sub_header("Test 1")
+    g = Graph("CLOTHES")
+    g.add_vertices(["undershorts", "pants", "belt", "shirt", "tie", "jacket",
+                    "socks", "shoes", "watch"])
+    g.add_edges([("undershorts", "pants"), ("undershorts", "shoes"),
+                 ("pants", "belt"), ("pants", "shoes"),
+                 ("belt", "jacket"),
+                 ("shirt", "belt"), ("shirt", "tie"),
+                 ("tie", "jacket"),
+                 ("socks", "shoes")])
+    _ = topological_sort(g)
+    print_sub_footer("Test 1 - Success")
+
+    print_sub_header("Test 2")
+    g = Graph("DEPS")
+    g.add_vertices([5, 11, 2, 7, 8, 9, 3, 10])
+    g.add_edges([(5, 11), (11, 2), (7, 11), (7, 8), (8, 9),
+                 (11, 9), (11, 10), (3, 8), (3, 10)])
+    _ = topological_sort(g)
+    print_sub_footer("Test 2 - Success")
+
+
 if __name__ == "__main__":
     test_get_universal_sink()
     print()
@@ -498,27 +557,5 @@ if __name__ == "__main__":
     print()
     test_depth_first_search2()
     print()
-    # ug = UndirectedGraph("ug2")
-    # ug.add_vertices(["A", "B", "C", "D", "E", "F", "G", "H", "S"])
-    # ug.add_edges([("A", "B"), ("A", "S"), ("S", "C"), ("S", "G"), ("C", "D"),
-    #               ("C", "F"), ("G", "F"), ("G", "H"), ("C", "E"), ("E", "H")])
-    # dfs_tree = depth_first_search(ug)
-    # edges = dfs_tree.get_edges()
-    # print("Len of edges: {}".format(len(edges)))
-    # for edge in edges:
-    #     print("{}----{}".format(edge.fr_str(), edge.to_str()))
-    # for v in dfs_tree.get_vertices():
-    #     parent = v.parent()
-    #     parent_id = "NA"
-    #     if parent is not None:
-    #         parent_id = parent.id()
-    #     print("{} - ({}, {})[{}]".format(v.id(), v.start(), v.end(), parent_id))
-    # edges = []
-    # for v in dfs_tree.get_adj_list():
-    #     adj_vertices = dfs_tree.get_adj_vertices_of(v)
-    #     for av in adj_vertices:
-    #         edge_type = classify_dfs_edge(v, av)
-    #         edges.append("{}--->{}[{}]".format(v.id(), av.id(), edge_type))
-    # print("Len of edges: {}".format(len(edges)))
-    # for edge in edges:
-    #     print(edge)
+    test_topological_sort()
+    print()
