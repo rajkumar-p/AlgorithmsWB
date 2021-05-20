@@ -472,6 +472,36 @@ def topo_sort(graph, v, incr, order_list):
             tv._color = Color.BLACK
 
 
+def topological_sort2(graph):
+    in_degrees = {}
+    for v in graph.get_vertices():
+        in_degrees[v] = 0
+    edges = graph.get_edges()
+    no_edges = len(edges)
+    for edge in edges:
+        in_degrees[edge.to()] = in_degrees[edge.to()] + 1
+
+    q = queue.Queue()
+    for v in in_degrees:
+        if in_degrees[v] == 0:
+            q.put(v)
+
+    order_list = []
+    while not q.empty():
+        v = q.get_nowait()
+        order_list.append(v.id())
+        for av in graph.get_adj_vertices_of(v):
+            no_edges = no_edges - 1
+            in_degrees[av] = in_degrees[av] - 1
+            if in_degrees[av] == 0:
+                q.put(av)
+
+    if no_edges != 0:
+        return []
+
+    return order_list
+
+
 def test_depth_first_search():
     print_header("Testing depth_first_search()")
     print_sub_header("Test 1")
@@ -548,6 +578,30 @@ def test_topological_sort():
     print_sub_footer("Test 2 - Success")
 
 
+def test_topological_sort2():
+    print_header("Testing topological_sort2()")
+    print_sub_header("Test 1")
+    g = Graph("CLOTHES")
+    g.add_vertices(["undershorts", "pants", "belt", "shirt", "tie", "jacket",
+                    "socks", "shoes", "watch"])
+    g.add_edges([("undershorts", "pants"), ("undershorts", "shoes"),
+                 ("pants", "belt"), ("pants", "shoes"),
+                 ("belt", "jacket"),
+                 ("shirt", "belt"), ("shirt", "tie"),
+                 ("tie", "jacket"),
+                 ("socks", "shoes")])
+    _ = topological_sort2(g)
+    print_sub_footer("Test 1 - Success")
+
+    print_sub_header("Test 2")
+    g = Graph("DEPS")
+    g.add_vertices([5, 11, 2, 7, 8, 9, 3, 10])
+    g.add_edges([(5, 11), (11, 2), (7, 11), (7, 8), (8, 9),
+                 (11, 9), (11, 10), (3, 8), (3, 10)])
+    _ = topological_sort2(g)
+    print_sub_footer("Test 2 - Success")
+
+
 if __name__ == "__main__":
     test_get_universal_sink()
     print()
@@ -558,4 +612,6 @@ if __name__ == "__main__":
     test_depth_first_search2()
     print()
     test_topological_sort()
+    print()
+    test_topological_sort2()
     print()
